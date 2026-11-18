@@ -11,4 +11,16 @@ import pandas as pd
 import requests
 import zipfile
 import altair as alt
+from ucimlrepo import fetch_ucirepo
+from pathlib import Path
+```
+
+```{python}
+# fetch dataset 
+cdc_diabetes_health_indicators = fetch_ucirepo(id=891) 
+
+# save raw dataset into data/raw
+url = "https://archive.ics.uci.edu/static/public/891/data.csv"
+df = pd.read_csv(url)
+df.to_csv("data/raw/raw_data.csv", index=False)
 ```

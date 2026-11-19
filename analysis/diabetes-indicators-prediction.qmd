@@ -48,6 +48,16 @@ df.to_csv("data/raw/raw_data.csv", index=False)
 
 # Discussion
 
+## The Canadain Gold Standard for diagnosing 
+
+## The limitation of our model because our model is underperforming compared to Gold Standard
+
+## Our model should not be used to diagnose diabetes
+
+## Our model does not account for other features that are associated with diabetes
+
+## Improving our model at predicting diabetes
+
 - American data, why it may relate to Canadian public health (reference source)? What are the limitations of the difference in populations (reference source)?
 - Interpret our results. Does the literature support the association between our selected features and diabetes?
 - Explain the intersectionality of diabetes outcomes (source reference).

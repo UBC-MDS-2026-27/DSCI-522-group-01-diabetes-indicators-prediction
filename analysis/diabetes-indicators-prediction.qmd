@@ -37,8 +37,20 @@ df.to_csv("data/raw/raw_data.csv", index=False)
 
 # Methods
 
+## Body mass index (BMI) as a predictor of diabetes
+
+Rafiq, Shamaila, and Per Bendix Jeppesen. 2018. "Body Mass Index, Vitamin D, and Type 2 Diabetes: A Systematic Review and Meta-Analysis." Nutrients 10 (9): 1182. <https://doi.org/10.3390/nu10091182>.
+
+High body mass index (BMI) is strongly associated with diabetes (https://doi.org/10.3390/nu10091182). Based on this, we first compared the distribution of BMI between individuals who have been diagnosed with diabetes and those who have not (Figure 1).
+
+*** Insert Figure 1 here (distribution of BMI for individuals with and without diabetes)***
+
+Figure 1 shows that the BMI distribution for individuals with diabetes is shifted toward higher values compared with those without diabetes. This supports our choice of BMI as a predictor of diabetes status.
+
+## Applying BMI to predict diabetes status
+
 - Describe the model.
-- Explain which features were selected from the data to predict diabetes outcome (source reference for why each feature was chosen).
+
 
 # Analysis and Results
 

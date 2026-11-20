@@ -286,23 +286,25 @@ false_negatives = int(confusion_matrix.loc[1, 0])
 false_positives = int(confusion_matrix.loc[0, 1])
 ```
 
-The logistic regression model has an accuracy of `{python} accuracy_text` and an F1 score of `{python} f1_text`. on the test data. The model correctly idetified `{python} true_positives` diabetes positive cases but also failed to identify `{python} false_negatives` cases resulting in a recall of `{python} recall_text`.
+The logistic regression model has an accuracy of `{python} accuracy_text` and an F1 score of `{python} f1_text`. on the test data. The model correctly identified `{python} true_positives` diabetes positive cases but also failed to identify `{python} false_negatives` cases resulting in a recall of `{python} recall_text`.
 
 The model also produced `{python} false_positives` false positives, suggesting that BMI alone is not sufficient for reliable diabetes classification. Although the model identifies more than half of the diabetes true positives, its low precision and high false negative make it unsuitable as is for medical screening.
 
 
 # Discussion
 
-## The Canadain Gold Standard for diagnosing 
+## The Canadian Gold Standard for diagnosing 
+There are several criterion used for diagnosing diabetes. These diagnostic tests include the HbA1c test that measures levels of glycated hemoglobin (A1c) greater than or equal to 6.5%, plasma glucose criterion measuring the levels of fasting plasma glucose (FPG) greater than or equal to 126 mg/dL or 2-h plasma glucose (2-h PG) during a 75g oral glucose tolerance test greater than or equal to 200 mg/dL, and classic symptoms of hyperglycemia such as polyuria, polydipsia, and unexplained weight loss (American 2026). Where hyperglycemia isn't already diagnosed in such patients, diabetes diagnosis requires two abnormal results from two different tests, like A1c and FPG.
 
 ## The limitation of our model because our model is underperforming compared to Gold Standard
+The diagnostic criterion illustrate a high significance in measuring blood glucose levels when diagnosing for diabetes. Although body mass index (BMI) incoporates relevant risk factors associated with diabetes, individuals with similar BMI values can have substantial differences in glucose regulation. The model underperforms to a predictive model using the diagnostic tests, which found that over 98.6% of participants who met the criterion for both HbA1c and FPG exhibited dysglycemia, of which 84.5% were classified as prediabetic and 14.1% as diabetic (Chadha et al. 2020).
 
 ## Our model should not be used to diagnose diabetes
-
+As shown, using BMI as a predictor led to significant false negative and false positive rates from our model. A false negative would classify diabetics as non-diabetic, which could lead to such patients either having delayed treatment or not being treated at all. This can have severe consequences, as the risk of complications increase exponentially with diabetes duration, of which include increased risk of stroke, myocardial infarction, heart failure, end-stage kidney disease, and mortality (Morton 2022). False positives would classify non-diabetics as diabetics, which could lead to non-health related consequences for patients undergoing treatment. In the US, people diagnosed with diabetes spend roughly 2.6 times more in medical expenditures than those without (Emily et al. 2022). Therefore, a false positive diagnosis could lead to unnecessary health-care costs on the patients, inapporprate use of medication on patients and their associated complications, and overall misallocation of hospital resources. These findings show that using our model could have devastating consequences if not corrected to improve on precision and recall rates.
 
 ## Our model does not account for other features associated with diabetes
 
-Our model uses body mass index (BMI) as its only feature to predict diabetes status. As a result, it leaves out many other factors associated with diabetes, including hypertension, dyslipidemia, smoking, sleep, family history, and ethnicity (Ismail, Materwala, and Al Kaabi 2021). Without these factors, our model greatly oversimplifies the range of factors associated with diabetes.
+Our model uses BMI as its only feature to predict diabetes status. As a result, it leaves out many other factors associated with diabetes, including hypertension, dyslipidemia, smoking, sleep, family history, and ethnicity (Ismail, Materwala, and Al Kaabi 2021). Without these factors, our model greatly oversimplifies the range of factors associated with diabetes.
 
 ## Potentially improving our predictive model
 
@@ -315,13 +317,21 @@ Finally, our data set describes U.S. adults, so our results may not fully reflec
 
 # References
 
+American Diabetes Association Professional Practice Committee for Diabetes. 2026. “2. Diagnosis and Classification of Diabetes: Standards of Care in Diabetes—2026.” Diabetes Care 49 (Supplement 1): S27–S49. https://doi.org/10.2337/dc26-S002.
+
 Centers for Disease Control and Prevention. 2015. “Behavioral Risk Factor Surveillance System Survey Data, 2015.” U.S. Department of Health and Human Services, Centers for Disease Control and Prevention.   https://www.cdc.gov/brfss/annual_data/annual_2015.html.
 
 “CDC Diabetes Health Indicators.” 2017. UCI Machine Learning Repository. https://doi.org/10.24432/C53919.
 
+Chadha, C., A. G. Pittas, C. W. Lary, W. C. Knowler, R. Chatterjee, L. S. Phillips, V. R. Aroda, M. R. Lewis, R. Pratley, M. A. Staten, J. Nelson, N. Rasouli, I. Brodsky, and D2d Research Group. 2020. “Reproducibility of a Prediabetes Classification in a Contemporary Population.” Metabolism Open 6: 100031. https://doi.org/10.1016/j.metop.2020.100031.
+
+Emily D. Parker, Janice Lin, Troy Mahoney, Nwanneamaka Ume, Grace Yang, Robert A. Gabbay, Nuha A. ElSayed, Raveendhara R. Bannuru; Economic Costs of Diabetes in the U.S. in 2022. Diabetes Care 2 January 2024; 47 (1): 26–43. https://doi.org/10.2337/dci23-0085
+
 Ismail, Leila, Huned Materwala, and Juma Al Kaabi. 2021. “Association of Risk Factors with Type 2 Diabetes: A Systematic Review.” Computational and Structural Biotechnology Journal 19: 1759–1785. https://doi.org/10.1016/j.csbj.2021.03.003.
 
 Lasser, Karen E., David U. Himmelstein, and Steffie Woolhandler. 2006. "Access to Care, Health Status, and Health Disparities in the United States and Canada: Results of a Cross-National Population-Based Survey." American Journal of Public Health 96 (7): 1300–1307. https://doi.org/10.2105/AJPH.2004.059402.
+
+Morton, Jedidiah I., Peter A. Lazzarini, Kevan R. Polkinghorne, Bendix Carstensen, Dianna J. Magliano, and Jonathan E. Shaw. 2022. “The Association of Attained Age, Age at Diagnosis, and Duration of Type 2 Diabetes with the Long-Term Risk for Major Diabetes-Related Complications.” Diabetes Research and Clinical Practice 190: 110022. https://doi.org/10.1016/j.diabres.2022.110022
 
 Public Health Agency of Canada. 2023. "Snapshot of Diabetes in Canada, 2023." Government of Canada. https://www.canada.ca/en/public-health/services/publications/diseases-conditions/snapshot-diabetes-canada-2023.html.
 

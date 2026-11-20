@@ -40,12 +40,11 @@ df = pd.read_csv("../data/raw/raw_data.csv")
 
 # Introduction
 
-- State what diabetes is medically (source reference).
-- test
-- How many Canadians live with diabetes? (source reference)
-- How many Canadians die from diabetes-related complications? (source reference)
-- What are the costs associated with diabetes from a public health perspective? (source reference)
-- Why is understanding diabetes important from a public health perspective? (source reference)
+- State what diabetes is medically (https://www.sciencedirect.com/science/article/pii/S0753332223015329?via%3Dihub).
+- How many Canadians live with diabetes? (https://health-infobase.canada.ca/diabetes/?utm_source=chatgpt.com)
+- How many Canadians die from diabetes-related complications? (Statistics Canada. Table 13-10-0394-01  Leading causes of death, total population, by age group, https://doi.org/10.25318/1310039401-eng)
+- What are the costs associated with diabetes from a public health perspective? (https://www.diabetes.ca/what-is-diabetes/diabetes-in-canada?utm_source=chatgpt.com)
+- Why is understanding diabetes important from a public health perspective? (https://www150.statcan.gc.ca/n1/pub/82-570-x/2024001/section2-eng.htm?utm_source=chatgpt.com)
 - Describe our predictive/inferential question, and explain whether answering it would support the literature stated above.
 - Explain why our model is important for understanding diabetes.
 

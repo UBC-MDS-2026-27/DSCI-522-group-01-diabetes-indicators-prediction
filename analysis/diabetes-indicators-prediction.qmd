@@ -286,16 +286,18 @@ false_negatives = int(confusion_matrix.loc[1, 0])
 false_positives = int(confusion_matrix.loc[0, 1])
 ```
 
-The logistic regression model has an accuracy of `{python} accuracy_text` and an F1 score of `{python} f1_text`. on the test data. The model correctly idetified `{python} true_positives` diabetes positive cases but also failed to identify `{python} false_negatives` cases resulting in a recall of `{python} recall_text`.
+The logistic regression model has an accuracy of `{python} accuracy_text` and an F1 score of `{python} f1_text`. on the test data. The model correctly identified `{python} true_positives` diabetes positive cases but also failed to identify `{python} false_negatives` cases resulting in a recall of `{python} recall_text`.
 
 The model also produced `{python} false_positives` false positives, suggesting that BMI alone is not sufficient for reliable diabetes classification. Although the model identifies more than half of the diabetes true positives, its low precision and high false negative make it unsuitable as is for medical screening.
 
 
 # Discussion
 
-## The Canadain Gold Standard for diagnosing 
+## The Canadian Gold Standard for diagnosing 
+There are several criterion used for diagnosing diabetes. These diagnostic tests include the HbA1c test that measures levels of glycated hemoglobin (A1c), plasma glucose criterion measuring the levels of fasting plasma glucose (FPG) or 2-h plasma glucose (2-h PG) during a 75g oral glucose tolerance test, and classic symptoms of hyperglycemia such as polyuria, polydipsia, and unexplained weight loss (American 2026). Where hyperglycemia isn't already diagnosed in such patients, diabetes diagnosis requires two abnormal results from two different tests, like A1c and FPG. This is supported in a study that found that over 98.6% of participants who met the criterion for both HbA1c and FPG exhibited dysglycemia, of which 84.5% were classified as prediabetic and 14.1% as diabetic (Chadha 2020).
 
 ## The limitation of our model because our model is underperforming compared to Gold Standard
+With BMI only as a risk factor, it is simple to link 
 
 ## Our model should not be used to diagnose diabetes
 
@@ -315,9 +317,15 @@ Finally, our data set describes U.S. adults, so our results may not fully reflec
 
 # References
 
+American Diabetes Association Professional Practice Committee for Diabetes. 2026. “2. Diagnosis and Classification of Diabetes: Standards of Care in Diabetes—2026.” Diabetes Care 49 (Supplement 1): S27–S49. https://doi.org/10.2337/dc26-S002.
+
 Centers for Disease Control and Prevention. 2015. “Behavioral Risk Factor Surveillance System Survey Data, 2015.” U.S. Department of Health and Human Services, Centers for Disease Control and Prevention.   https://www.cdc.gov/brfss/annual_data/annual_2015.html.
 
 “CDC Diabetes Health Indicators.” 2017. UCI Machine Learning Repository. https://doi.org/10.24432/C53919.
+
+Chadha, C., A. G. Pittas, C. W. Lary, W. C. Knowler, R. Chatterjee, L. S. Phillips, V. R. Aroda, M. R. Lewis, R. Pratley, M. A. Staten, J. Nelson, N. Rasouli, I. Brodsky, and D2d Research Group. 2020. “Reproducibility of a Prediabetes Classification in a Contemporary Population.” Metabolism Open 6: 100031. https://doi.org/10.1016/j.metop.2020.100031.
+
+This follows Chicago Author-Date style, consistent with your other references.
 
 Ismail, Leila, Huned Materwala, and Juma Al Kaabi. 2021. “Association of Risk Factors with Type 2 Diabetes: A Systematic Review.” Computational and Structural Biotechnology Journal 19: 1759–1785. https://doi.org/10.1016/j.csbj.2021.03.003.
 

@@ -38,7 +38,7 @@ To run the analysis and render the report,
 run the following from the root of this repository:
 
 ``` bash
-uv run quarto render analysis/diabetes-indicators-prediction.qmd
+uv run quarto render
 ```
 
 Rendering runs the whole analysis from scratch:

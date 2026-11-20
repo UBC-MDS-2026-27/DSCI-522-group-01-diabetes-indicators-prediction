@@ -3,6 +3,9 @@ title: "Diabetes BMI Indicator Prediction"
 author: "Alejandro Gutierrez, Barry Siu, Michael Chan, Migs Dimayacyac"
 date: "November 21, 2026"
 jupyter: python3
+format:
+  html:
+    embed-resources: true
 ---
 
 # Imports
@@ -26,8 +29,7 @@ alt.data_transformers.enable("vegafusion")
 
 # Summary 
 
-In this project, we investigated whether body mass index (BMI) can be used to predict diabetes status. Using the CDC Diabetes Health Indicators data set, which contains 253,680 survey responses from U.S. adults collected through the 2015 Behavioral Risk Factor Surveillance System, we trained a logistic regression model with BMI as the only predictor and compared it with a dummy classifier that always predicts "no diabetes". Because only a small proportion of respondents have diabetes, we used a class-balanced model and evaluated performance with the F1 score rather than accuracy
-alone. Exploratory analysis showed that individuals with diabetes tend to have higher BMI values, and our model correctly identified more than half of the diabetes cases in the test set, performing better than the baseline at detecting diabetes. However, the model also produced a large number of false positives and missed many true cases, indicating that BMI alone is not sufficient for reliable diabetes classification. These results suggest that BMI is only slightly useful but limited predictor, and that adding other known risk factors and validating the model on Canadian data would be needed before such a model could support Canadian public health efforts.
+In this project, we investigated whether body mass index (BMI) can be used to predict diabetes status. Using the CDC Diabetes Health Indicators data set, which contains 253,680 survey responses from U.S. adults collected through the 2015 Behavioral Risk Factor Surveillance System, we trained a logistic regression model with BMI as the only predictor and compared it with a dummy classifier that always predicts "no diabetes". Because only a small proportion of respondents have diabetes, we used a class-balanced model and evaluated performance with the F1 score rather than accuracy alone. Exploratory analysis showed that individuals with diabetes tend to have higher BMI values, and our model correctly identified more than half of the diabetes cases in the test set, performing better than the baseline at detecting diabetes. However, the model also produced a large number of false positives and missed many true cases, indicating that BMI alone is not sufficient for reliable diabetes classification. These results suggest that BMI is only slightly useful but limited predictor, and that adding other known risk factors and validating the model on Canadian data would be needed before such a model could support Canadian public health efforts.
 
 # Introduction
 
@@ -102,8 +104,7 @@ print("Testing shape:", test_df.shape)
 
 ## Applicability of U.S. Data to the Canadian Context
 
-Although the data set describes U.S. adults, we chose it because it is large, publicly available, and contains individual-level information on many well-established diabetes risk factors, which makes it well suited to building a classification model. These findings are also relevant to Canadian public health. Canada and the United States share similar risk factors for type 2 diabetes: many of the variables in our data set, including age, BMI, physical activity, fruit and vegetable consumption and high blood pressure, are the same factors used in the Canadian Diabetes Risk
-Questionnaire (CANRISK) developed by the Public Health Agency of Canada (Robinson, Agarwal, and Nerenberg 2011). Diabetes is also a major public health concern in Canada, where 9.4% of people were living with diagnosed diabetes in 2020–2021 (Public Health Agency of Canada 2023). The two countries differ mainly in how common these risk factors are rather than in which factors matter, with Americans more likely than Canadians to report diabetes and high blood pressure (Lasser, Himmelstein, and Woolhandler 2006). As a result, the relationships our model learns are likely to apply in a Canadian setting, although the model would need to be validated on Canadian data, such as the Canadian Community Health Survey, before being used in practice.
+Although the data set describes U.S. adults, we chose it because it is large, publicly available, and contains individual-level information on many well-established diabetes risk factors, which makes it well suited to building a classification model. These findings are also relevant to Canadian public health. Canada and the United States share similar risk factors for type 2 diabetes: many of the variables in our data set, including age, BMI, physical activity, fruit and vegetable consumption and high blood pressure, are the same factors used in the Canadian Diabetes Risk Questionnaire (CANRISK) developed by the Public Health Agency of Canada (Robinson, Agarwal, and Nerenberg 2011). Diabetes is also a major public health concern in Canada, where 9.4% of people were living with diagnosed diabetes in 2020–2021 (Public Health Agency of Canada 2023). The two countries differ mainly in how common these risk factors are rather than in which factors matter, with Americans more likely than Canadians to report diabetes and high blood pressure (Lasser, Himmelstein, and Woolhandler 2006). As a result, the relationships our model learns are likely to apply in a Canadian setting, although the model would need to be validated on Canadian data, such as the Canadian Community Health Survey, before being used in practice.
 
 (Note: Claude AI helped generate this rationale for applying this data set in a Canadian context)
 
@@ -210,14 +211,7 @@ print("Best CV F1:", logistic_search.best_score_)
 
 ## Baseline comparison with a dummy classifier
 
-To judge whether our logistic regression model is actually learning from BMI, we
-compared it with a dummy classifier that ignores BMI entirely and always predicts the
-most common class, "no diabetes". Because most respondents in our data set do not
-have diabetes, this baseline achieves a high accuracy without identifying a single
-diabetes case, giving it a recall and F1 score of zero. Comparing the two models shows
-how much predictive value BMI adds beyond simply guessing the majority class, and it
-highlights why accuracy alone is a misleading measure of performance for imbalanced
-data such as ours.
+To judge whether our logistic regression model is actually learning from BMI, we compared it with a dummy classifier that ignores BMI entirely and always predicts the most common class, "no diabetes". Because most respondents in our data set do not have diabetes, this baseline achieves a high accuracy without identifying a single diabetes case, giving it a recall and F1 score of zero. Comparing the two models shows how much predictive value BMI adds beyond simply guessing the majority class, and it highlights why accuracy alone is a misleading measure of performance for imbalanced data such as ours.
 
 ```{python}
 # baseline model: always predicts the most common class (no diabetes)

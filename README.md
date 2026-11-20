@@ -38,7 +38,7 @@ To run the analysis and render the report,
 run the following from the root of this repository:
 
 ``` bash
-uv run quarto render
+uv run quarto render analysis/diabetes-indicators-prediction.qmd
 ```
 
 Rendering runs the whole analysis from scratch:
@@ -58,6 +58,7 @@ replacing the versions in this repository.
 
 ## AI use statement
 
+** fill in when analysis report is finished **
 
 ## License
 
@@ -73,16 +74,4 @@ The dataset is released under the
 
 ## References
 
-Centers for Disease Control and Prevention. 2015. "Behavioral Risk Factor
-Surveillance System Survey Data." U.S. Department of Health and Human
-Services. <https://www.cdc.gov/brfss/>.
-
-Teboul, Alex. 2021. "Diabetes Health Indicators Dataset." Kaggle.
-<https://www.kaggle.com/datasets/alexteboul/diabetes-health-indicators-dataset>.
-
-"CDC Diabetes Health Indicators." 2017. UCI Machine Learning Repository.
-<https://doi.org/10.24432/C53919>.
-
-Dua, Dheeru, and Casey Graff. 2017. "UCI Machine Learning Repository."
-University of California, Irvine, School of Information; Computer
-Sciences. <http://archive.ics.uci.edu/ml>.
+** Pull references when analaysis report is complete **

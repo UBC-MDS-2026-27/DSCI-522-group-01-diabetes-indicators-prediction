@@ -225,17 +225,21 @@ The model also produced 13514 false positives, suggesting that BMI alone is not 
 
 ## Our model should not be used to diagnose diabetes
 
-## Our model does not account for other features that are associated with diabetes
+## Our model does not account for other features associated with diabetes
 
-## Improving our model at predicting diabetes
+Ismail, Leila, Huned Materwala, and Juma Al Kaabi. 2021. “Association of Risk Factors with Type 2 Diabetes: A Systematic Review.” Computational and Structural Biotechnology Journal 19: 1759–1785. https://doi.org/10.1016/j.csbj.2021.03.003.
+
+Our model uses body mass index (BMI) as its only feature to predict diabetes status. As a result, it leaves out many other factors associated with diabetes, including hypertension, dyslipidemia, smoking, sleep, family history, and ethnicity [https://doi.org/10.1016/j.csbj.2021.03.003]. Without these factors, our model greatly oversimplifies the range of factors associated with diabetes.
+
+## Potentially improving our predictive model
+
+Adding other features associated with diabetes [https://doi.org/10.1016/j.csbj.2021.03.003], such as, but not limited to, high blood pressure, high cholesterol, and smoking status, could improve our model's ability to predict diabetes.
+
+We explored only two model types, k-nearest neighbours (kNN) and logistic regression, to predict diabetes status from a single feature, BMI. Trying other models, and tuning their hyperparameters, could make our predictions more accurate and robust.
+
+
 
 - American data, why it may relate to Canadian public health (reference source)? What are the limitations of the difference in populations (reference source)?
 - Interpret our results. Does the literature support the association between our selected features and diabetes?
-- Explain the intersectionality of diabetes outcomes (source reference).
-- Explain the genetic component of diabetes (source reference).
 - What is the "gold standard" for diagnosing diabetes (HbA1c levels, source reference), and how does it relate to our analysis?
-- Limitations of our model:
-    - Why our model should not be used for diagnostic purposes (source reference), and why false negatives could be dangerous (source reference).
-    - Why our model isn't optimized, and how it could be improved.
-- Future directions:
-    - What would make our analysis more robust? Genomic data (source reference)? Analysis of other features (source reference)?
+- Limitations of our model: Why our model should not be used for diagnostic purposes (source reference), and why false negatives could be dangerous (source reference).

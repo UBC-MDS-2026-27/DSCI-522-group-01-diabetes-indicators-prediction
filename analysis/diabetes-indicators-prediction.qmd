@@ -1,28 +1,41 @@
 ---
-title: ""
-author: ""
-date: ""
+title: "Diabetes Indicators Prediction"
+author: "Migs Dimayacyac, Michael Chan, Barry Siu, Alejandro Gutierrez"
+date: "Nov. 21, 2026"
 jupyter: python3
 ---
 # Imports
 ```{python}
-import numpy as np
+#| message: false
+#| warning: false
 import pandas as pd
-import requests
-import zipfile
 import altair as alt
-from ucimlrepo import fetch_ucirepo
 from pathlib import Path
+from ucimlrepo import fetch_ucirepo
+from sklearn.model_selection import train_test_split, GridSearchCV
+from sklearn.preprocessing import StandardScaler
+from sklearn.linear_model import LogisticRegression
+from sklearn.pipeline import make_pipeline
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
+
+# increase dataset rows limit, default 5000
+alt.data_transformers.enable("vegafusion")
 ```
 
 ```{python}
 # fetch dataset 
 cdc_diabetes_health_indicators = fetch_ucirepo(id=891) 
 
+raw_dir = Path("../data/raw")
+raw_dir.mkdir(parents=True, exist_ok=True)
+
 # save raw dataset into data/raw
 url = "https://archive.ics.uci.edu/static/public/891/data.csv"
 df = pd.read_csv(url)
-df.to_csv("data/raw/raw_data.csv", index=False)
+df.to_csv(raw_dir / "raw_data.csv", index=False)
+
+# read the data from the file we just created
+df = pd.read_csv("../data/raw/raw_data.csv")
 ```
 
 # Introduction
@@ -37,19 +50,165 @@ df.to_csv("data/raw/raw_data.csv", index=False)
 
 # Methods
 
+## Applying BMI to predict diabetes status
+
+
+```{python}
+# select the target and prediction feature
+df = df[["BMI", "Diabetes_binary"]]
+
+# split data in train and test, stratify is to ensure there are enough examples in both splits
+# because most examples are non diabetic
+train_df, test_df = train_test_split(
+    df,
+    test_size=0.2,
+    random_state=522,
+    stratify=df["Diabetes_binary"]
+)
+# Create processed data directory
+processed_dir = Path("../data/processed")
+processed_dir.mkdir(parents=True, exist_ok=True)
+
+# save the files and check the df shapes
+train_df.to_csv(processed_dir / "train.csv", index=False)
+test_df.to_csv(processed_dir / "test.csv", index=False)
+
+print("Training shape:", train_df.shape)
+print("Testing shape:", test_df.shape)
+```
+
+```{python}
+# BMI summary by diabetes status using training data
+bmi_summary = train_df.groupby("Diabetes_binary")["BMI"].agg(
+    ["count", "mean", "median", "std"]
+)
+```
+
 ## Body mass index (BMI) as a predictor of diabetes
 
 Rafiq, Shamaila, and Per Bendix Jeppesen. 2018. "Body Mass Index, Vitamin D, and Type 2 Diabetes: A Systematic Review and Meta-Analysis." Nutrients 10 (9): 1182. <https://doi.org/10.3390/nu10091182>.
 
 High body mass index (BMI) is strongly associated with diabetes (https://doi.org/10.3390/nu10091182). Based on this, we first compared the distribution of BMI between individuals who have been diagnosed with diabetes and those who have not (Figure 1).
 
-*** Insert Figure 1 here (distribution of BMI for individuals with and without diabetes)***
+```{python}
+# sample training data for the plot
+plot_df = train_df.sample(n=10000, random_state=522).copy()
+
+# The following plot was made using GPT6 for assistance.
+plot_df["Diabetes status"] = plot_df["Diabetes_binary"].map({
+    0: "No diabetes",
+    1: "Diabetes"
+})
+
+# Compare BMI distributions
+bmi_plot = alt.Chart(plot_df, width=600, height=300).transform_density(
+    "BMI",
+    groupby=["Diabetes status"]
+).mark_area(opacity=0.6).encode(
+    x=alt.X("value:Q", title="Body Mass Index (BMI)"),
+    y=alt.Y("density:Q", stack=False, title="Density"),
+    color=alt.Color("Diabetes status:N")
+).properties(
+    title="BMI Distribution by Diabetes Status"
+)
+```
+
+```{python}
+#| label: fig-bmi-distribution
+#| fig-cap: "BMI distribution by diabetes status from train data."
+bmi_plot
+```
 
 Figure 1 shows that the BMI distribution for individuals with diabetes is shifted toward higher values compared with those without diabetes. This supports our choice of BMI as a predictor of diabetes status.
 
-## Applying BMI to predict diabetes status
+```{python}
+# BMI summary by diabetes status using training data
+bmi_summary
+```
 
-- Describe the model.
+```{python}
+# select BMI as the prediction feature and diabetes as the target
+X_train = train_df[["BMI"]]
+y_train = train_df["Diabetes_binary"]
+
+X_test = test_df[["BMI"]]
+y_test = test_df["Diabetes_binary"]
+
+# create the logistic regression model
+logistic_model = make_pipeline(
+    StandardScaler(),
+    LogisticRegression(max_iter=1000)
+)
+```
+
+```{python}
+# compare regular and balanced logistic regression
+param_grid_logistic = {
+    "logisticregression__class_weight": [None, "balanced"]
+}
+
+# use F1 score to balance precision and recall
+logistic_search = GridSearchCV(
+    estimator=logistic_model,
+    param_grid=param_grid_logistic,
+    cv=3,
+    scoring="f1",
+    n_jobs=-1
+)
+
+# train the model
+logistic_search.fit(X_train, y_train)
+
+# check the best parameters and F1 score
+print("Best parameters:", logistic_search.best_params_)
+print("Best CV F1:", logistic_search.best_score_)
+```
+
+```{python}
+# predict diabetes using the test data
+logistic_pred = logistic_search.predict(X_test)
+```
+
+
+```{python}
+# calculate accuracy, precision, recall and F1 score
+logistic_accuracy = accuracy_score(y_test, logistic_pred)
+logistic_precision = precision_score(y_test, logistic_pred, zero_division=0)
+logistic_recall = recall_score(y_test, logistic_pred, zero_division=0)
+logistic_f1 = f1_score(y_test, logistic_pred, zero_division=0)
+
+# save results
+score_results = pd.DataFrame({
+    "Accuracy": [logistic_accuracy],
+    "Precision": [logistic_precision],
+    "Recall": [logistic_recall],
+    "F1 Score": [logistic_f1]
+}, index=["Test set"])
+```
+
+```{python}
+# compare the predicted and actual diabetes status
+confusion_matrix = pd.crosstab(
+    y_test,
+    logistic_pred,
+    rownames=["Actual diabetes status"],
+    colnames=["Predicted diabetes status"]
+)
+```
+
+```{python}
+# accuracy, precision, recall and F1 score in a df
+score_results
+```
+
+```{python}
+# confusion matrix in a df
+confusion_matrix
+```
+
+The logistic regression model has an accuracy of 67.62% and an F1 score of 0.3360. on the test data. The model correctly idetified 4156 diabetes positive cases but also failed to identify 2913 cases resulting in a recall of 58.79%.
+
+The model also produced 13514 false positives, suggesting that BMI alone is not sufficient for reliable diabetes classification. Although the model identifies more than half of the diabetes true positives, its low precision and high false negative make it unsuitable as is for medical screening.
 
 
 # Analysis and Results

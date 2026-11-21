@@ -28,6 +28,5 @@ The responsibilities and expected behaviours listed in this Code of Conduct are 
 ## Enforcement
 Violation of any of the above guidelines such as instances of abusive, harassing, or unacceptable behaviour should be reported to the project team at barrysiu@student.ubc.bc.ca. All complaints will be reviewed and investigated by the team, the team will also ensure the confidentiality of the reporter of an incident be maintained. Anyone found violating the Code of Conduct (both maintainers or contributors) may face temporary or permanent repercussions. 
 
-
 ## Attribution
 This Code of Conduct is adapted from the [DSCI 522 Project Template Code of Conduct](https://github.com/UBC-MDS/DSCI_522_project-template-breast-cancer-predictor/blob/main/CODE_OF_CONDUCT.md), which was copied from the [tidyverse Code of Conduct](https://github.com/tidyverse/tidyverse.org/blob/master/CODE_OF_CONDUCT.md). 

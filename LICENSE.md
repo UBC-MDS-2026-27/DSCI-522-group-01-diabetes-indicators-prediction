@@ -1,10 +1,10 @@
-# Licence
+# License
 
 ## Analysis report
 
 Copyright (c) 2026 Alejandro Gutierrez, Barry Siu, Michael Chan, & Migs Dimayacyac
 
-Summary of (and not a substitute for) the [licence](https://creativecommons.org/licenses/by-nc-nd/4.0/)
+Summary of (and not a substitute for) the [license](https://creativecommons.org/licenses/by-nc-nd/4.0/)
 
 ## You are free to:
 

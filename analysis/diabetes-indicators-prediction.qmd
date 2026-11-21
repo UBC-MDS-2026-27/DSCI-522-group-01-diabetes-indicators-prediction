@@ -21,7 +21,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LogisticRegression
 from sklearn.dummy import DummyClassifier
 from sklearn.pipeline import make_pipeline
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, roc_auc_score
 
 # increase dataset rows limit, default 5000
 alt.data_transformers.enable("vegafusion")
@@ -29,30 +29,17 @@ alt.data_transformers.enable("vegafusion")
 
 # Summary 
 
-In this project, we investigated whether body mass index (BMI) can be used to predict diabetes status. Using the CDC Diabetes Health Indicators data set, which contains 253,680 survey responses from U.S. adults collected through the 2015 Behavioral Risk Factor Surveillance System, we trained a logistic regression model with BMI as the only predictor and compared it with a dummy classifier that always predicts "no diabetes". Because only a small proportion of respondents have diabetes, we used a class-balanced model and evaluated performance with the F1 score rather than accuracy alone. Exploratory analysis showed that individuals with diabetes tend to have higher BMI values, and our model correctly identified more than half of the diabetes cases in the test set, performing better than the baseline at detecting diabetes. However, the model also produced a large number of false positives and missed many true cases, indicating that BMI alone is not sufficient for reliable diabetes classification. These results suggest that BMI is only slightly useful but limited predictor, and that adding other known risk factors and validating the model on Canadian data would be needed before such a model could support Canadian public health efforts.
+In this project, we investigated whether body mass index (BMI) can be used to predict diabetes status. We used the CDC Diabetes Health Indicators data set, which contains 253,680 survey responses from U.S. adults collected through the 2015 Behavioral Risk Factor Surveillance System. We trained a logistic regression model with BMI as the only predictor and compared it with a dummy classifier that always predicts "no diabetes". Because only a small proportion of respondents have diabetes, we used a class-balanced model and evaluated performance mainly with the F1 score rather than accuracy. Exploratory analysis showed that respondents with diabetes tend to have higher BMI values. Our model correctly identified more than half of the diabetes cases in the test set, whereas the baseline identified none. However, our model had lower overall accuracy than the baseline because it produced a large number of false positives, and it still missed many true cases. These results suggest that BMI is a useful but limited predictor of diabetes on its own. Adding other known risk factors and validating the model on Canadian data would be needed before such a model could support Canadian public health efforts.
 
 # Introduction
-Diabetes mellitus (commonly referred to as just diabetes) is a metabolic disorder in which there is a lack of insulin secretation or development of insulin resistance (or a combination of both). The lack of insulin or response to insulin prevents the body from regulating blood glucose levels properly leading to development of a condition known as hyperglycemia. Short-term symptoms of hyperglycemia including dehydration, fatigue or weakness, and blurred vision. Hyperglycemia is also dangerous, as long-term effects include kidney damage, heart disease, and poor wound healing leading to a much higher risk of infections. Diabetes can classified as type 1 or type 2, with type 1 resulting from a lack of or no insulin production. Type 2 diabetes results from the body developing a resistance to insulin leading to the pancreas not being able to produce enough insulin. Depending on the type of diabetes a patient may require prescribed insulin and consistent blood glucose monitoring. [Source](https://www.sciencedirect.com/science/article/pii/S0753332223015329?via%3Dihub)
 
-Diabetes has a large impact on the health of Canadians, in 2023 to 2024 the Public Health Agency of Canada found that [3.9 million Canadians](https://health-infobase.canada.ca/diabetes/) live with diagnosed diabetes. Diabetes is ranked 7th in leading causes of death in Canada, with more than [6,874 deaths](https://doi.org/10.25318/1310039401-eng) diabetes related deaths in 2024 alone. Aside from health impacts, diabetes also has a significant financial burden on Canadians, in 2024 the costs of diabetes on the Canadian healthcare system totalled to [$18.25 billion](https://www.diabetes.ca/what-is-diabetes/diabetes-in-canada). 
+Diabetes mellitus (commonly referred to as just diabetes) is a metabolic disorder in which there is a lack of insulin secretation or development of insulin resistance (or a combination of both). The lack of insulin or response to insulin prevents the body from regulating blood glucose levels properly leading to development of a condition known as hyperglycemia. Short-term symptoms of hyperglycemia including dehydration, fatigue or weakness, and blurred vision. Hyperglycemia is also dangerous, as long-term effects include kidney damage, heart disease, and poor wound healing leading to a much higher risk of infections. Diabetes can classified as type 1 or type 2, with type 1 resulting from a lack of or no insulin production. Type 2 diabetes results from the body developing a resistance to insulin leading to the pancreas not being able to produce enough insulin. Depending on the type of diabetes a patient may require prescribed insulin and consistent blood glucose monitoring (Antar et al. 2023). 
 
-From a public health perspective it is important to understand the impact of diabetes on Canadian as it can allow for more equitable allocation of health resources and better preventative education. Comparing provinces, [Statistics Canada](https://www150.statcan.gc.ca/n1/pub/82-570-x/2024001/section2-eng.htm) report diabetes as more common in Newfoundland and Labrador (11.1%) and Nova Scotia (10.5%) when compared to British Columbia (6.8%). In the same report, diabetes is also much more prevalent in Canadians with a disability (16.6%) than those without (6.9%). [Overweight and obesity are both risk factors for diabetes](https://www150.statcan.gc.ca/n1/pub/82-570-x/2024001/section2-eng.htm), with body mass index (BMI) being one method of classifying body weight in relation to health risk. Understanding the impact of risk factors on diabetes prevalence can educate the public on developing healthy habits in order to minimize the development of diabetes. Understanding these regional variations in diabetes prevalence and its effect on Canadians is important to providing equitable healthcare and informing public health decisions. 
+Diabetes has a large impact on the health of Canadians, in 2023 to 2024 the Public Health Agency of Canada found that 3.9 million Canadians (Public Health Agency of Canada 2025) live with diagnosed diabetes. Diabetes is ranked 7th in leading causes of death in Canada, with more than 6,874 deaths (Statistics Canada n.d.b) diabetes related deaths in 2024 alone. Aside from health impacts, diabetes also has a significant financial burden on Canadians, in 2024 the costs of diabetes on the Canadian healthcare system totalled to $18.25 billion (Diabetes Canada n.d.). 
 
-Our analysis aims to investigate the ability of using BMI as a predictor of diabetes status in Canadians. [Previous literature](https://www150.statcan.gc.ca/n1/en/pub/82-003-x/2008003/article/10680-eng.pdf?st=K5h3zTVe) has found that when BMI values were correctly reported they provide a good measure of obesity prevalence. The ability of using BMI as a predictor of diabetes status supports obesisty being a key risk factor and BMI representing this risk. Our model provides insight into the risks associated with diabetes, while also providing better understanding on the strength of those risks. A model mapping the association between BMI and diabetes status can help inform health decisions and policy regarding diabetes.
+From a public health perspective it is important to understand the impact of diabetes on Canadian as it can allow for more equitable allocation of health resources and better preventative education. Comparing provinces, Statistics Canada (Statistics Canada n.d.a) report diabetes as more common in Newfoundland and Labrador (11.1%) and Nova Scotia (10.5%) when compared to British Columbia (6.8%). In the same report, diabetes is also much more prevalent in Canadians with a disability (16.6%) than those without (6.9%). Overweight and obesity are both risk factors for diabetes (Statistics Canada n.d.a), with body mass index (BMI) being one method of classifying body weight in relation to health risk. Understanding the impact of risk factors on diabetes prevalence can educate the public on developing healthy habits in order to minimize the development of diabetes. Understanding these regional variations in diabetes prevalence and its effect on Canadians is important to providing equitable healthcare and informing public health decisions. 
 
-Citations (listed in order of appearance)
-
-Antar, S. A., Ashour, N. A., Sharaky, M., Khattab, M., Ashour, N. A., Zaid, R. T., Roh, E. J., Elkamhawy, A., & Al-Karmalawy, A. A. (2023). Diabetes mellitus: Classification, mediators, and complications; A gate to identify potential targets for the development of new effective treatments. Biomedicine & pharmacotherapy = Biomedecine & pharmacotherapie, 168, 115734. https://doi.org/10.1016/j.biopha.2023.115734
-
-Public Health Agency of Canada. (2025, November 20). Diabetes in Canada: An interactive report on key statistics: Overview. Canada.ca. https://health-infobase.canada.ca/diabetes/ 
-
-Statistics Canada. Table 13-10-0394-01  Leading causes of death, total population, by age group
-
-Diabetes Canada. (n.d.). Diabetes in Canada. Diabetes Canada. https://www.diabetes.ca/what-is-diabetes/diabetes-in-canada 
-
-Statistics Canada. (n.d.). Health of Canadians Health outcomes. Health Outcomes. https://www150.statcan.gc.ca/n1/pub/82-570-x/2024001/section2-eng.htm 
-
-Connor Gorber, S., Shields, M., Tremblay, M. S., & McDowell, I. (2008). The feasibility of establishing correction factors to adjust self-reported estimates of obesity. Health reports, 19(3), 71–82.
+Our analysis aims to investigate the ability of using BMI as a predictor of diabetes status in Canadians. Previous literature (Connor Gorber et al. 2008) has found that when BMI values were correctly reported they provide a good measure of obesity prevalence. The ability of using BMI as a predictor of diabetes status supports obesity being a key risk factor and BMI representing this risk. Our model provides insight into the risks associated with diabetes, while also providing better understanding on the strength of those risks. A model mapping the association between BMI and diabetes status can help inform health decisions and policy regarding diabetes.
 
 # Methods
 
@@ -88,6 +75,12 @@ if not raw_path.exists():
 # read the data from the saved file
 df = pd.read_csv(raw_path)
 ```
+
+## Splitting our data into training and test set
+
+To predict diabetes status, we first split the data into a training set (80%) and a test set (20%). Because most respondents do not have diabetes, we used a stratified split so that both sets have the same proportion of diabetic and non-diabetic respondents. The training and test sets were saved to `data/processed/`, and the test set was set aside until the final evaluation so it would not influence model building.
+
+We selected body mass index (BMI) as our only predictor and diabetes status as our target variable because our research question focuses on whether BMI alone can predict diabetes. By keeping only these two variables, we can evaluate the predictive ability of BMI focusing only on what need. Additionally, splitting the data now avoids using information from the test set to make modeling decisions.
 
 ```{python}
 # select the target and prediction feature
@@ -174,8 +167,6 @@ bmi_summary
 
 ## Applying BMI to predict diabetes status
 
-To predict diabetes status, we used BMI as the only predictor and `Diabetes_binary` as the target. We first split the data into a training set (80%) and a test set (20%). Because most respondents do not have diabetes, we used a stratified split so that both sets have the same proportion of diabetic and non-diabetic respondents. The training and test sets were saved to `data/processed/`, and the test set was set aside until the final evaluation so it would not influence model building.
-
 We then built a logistic regression model in a pipeline that first standardizes BMI with `StandardScaler`. To address the class imbalance, we used grid search with 3-fold cross-validation to compare a standard logistic regression with a class-balanced version, which gives more weight to the smaller diabetic class during training. We used the F1 score as the evaluation metric because it balances precision and recall. Accuracy would be misleading here, since a model that predicts "no diabetes" for everyone would still score highly.
 
 ```{python}
@@ -218,9 +209,7 @@ print("Best CV F1:", logistic_search.best_score_)
 
 # Analysis and Results
 
-- Explain how the model predicted the diabetes label based on the features.
-- Report accuracy, recall, precision, and any other relevant metrics.
-- Determine whether the analysis supports our predictive/inferential question.
+Our logistic regression model uses BMI to estimate the probability that a respondent has diabetes. If the predicted probability is 50% or higher, the model classifies the respondent as positive (1), otherwise, it predicts negative (0).
 
 ## Baseline comparison with a dummy classifier
 
@@ -242,17 +231,22 @@ dummy_pred = dummy_model.predict(X_test)
 
 ```{python}
 # calculate accuracy, precision, recall and F1 score for both models
-def get_scores(y_true, y_pred):
+def get_scores(y_true, y_pred, y_prob):
     return {
         "Accuracy": accuracy_score(y_true, y_pred),
         "Precision": precision_score(y_true, y_pred, zero_division=0),
         "Recall": recall_score(y_true, y_pred, zero_division=0),
-        "F1 Score": f1_score(y_true, y_pred, zero_division=0)
+        "F1 Score": f1_score(y_true, y_pred, zero_division=0),
+        "ROC-AUC": roc_auc_score(y_true, y_prob)
     }
+
+# predicted probabilities for diabetes
+logistic_prob = logistic_search.predict_proba(X_test)[:,1]
+dummy_prob = dummy_model.predict_proba(X_test)[:,1]
 
 # save results on the test set
 score_results = pd.DataFrame(
-    [get_scores(y_test, dummy_pred), get_scores(y_test, logistic_pred)],
+    [get_scores(y_test, dummy_pred, dummy_prob), get_scores(y_test, logistic_pred, logistic_prob)],
     index=["Dummy classifier (baseline)", "Logistic regression"]
 )
 ```
@@ -287,6 +281,7 @@ logistic_scores = score_results.loc["Logistic regression"]
 accuracy_text = Markdown(f"{logistic_scores['Accuracy']:.2%}")
 f1_text = Markdown(f"{logistic_scores['F1 Score']:.4f}")
 recall_text = Markdown(f"{logistic_scores['Recall']:.2%}")
+auc_text = Markdown(f"{logistic_scores['ROC-AUC']:.4f}")
 
 true_positives = int(confusion_matrix.loc[1, 1])
 false_negatives = int(confusion_matrix.loc[1, 0])
@@ -295,8 +290,14 @@ false_positives = int(confusion_matrix.loc[0, 1])
 
 The logistic regression model has an accuracy of `{python} accuracy_text` and an F1 score of `{python} f1_text`. on the test data. The model correctly identified `{python} true_positives` diabetes positive cases but also failed to identify `{python} false_negatives` cases resulting in a recall of `{python} recall_text`.
 
-The model also produced `{python} false_positives` false positives, suggesting that BMI alone is not sufficient for reliable diabetes classification. Although the model identifies more than half of the diabetes true positives, its low precision and high false negative make it unsuitable as is for medical screening.
+The model also produced `{python} false_positives` false positives, suggesting that BMI alone is not sufficient for reliable diabetes classification. Although the model identifies more than half of the diabetes true positives, it has low precision and a large number of false negatives.
 
+Overall, our results suggest that BMI has some predictive value for diabetes status, as the model identified positive cases that the baseline missed. However, our model still performs poorly when compared to the Dummy Classifier.
+
+## Our model performed worse than the baseline (This subtitle can be changed to however you wish)
+
+Suggestion:
+- State that our model did not perform better than the baseline and than state why that sucks.
 
 # Discussion
 
@@ -304,9 +305,11 @@ The model also produced `{python} false_positives` false positives, suggesting t
 There are several criterion used for diagnosing diabetes. These diagnostic tests include the HbA1c test that measures levels of glycated hemoglobin (A1c) greater than or equal to 6.5%, plasma glucose criterion measuring the levels of fasting plasma glucose (FPG) greater than or equal to 126 mg/dL or 2-h plasma glucose (2-h PG) during a 75g oral glucose tolerance test greater than or equal to 200 mg/dL, and classic symptoms of hyperglycemia such as polyuria, polydipsia, and unexplained weight loss (American 2026). Where hyperglycemia isn't already diagnosed in such patients, diabetes diagnosis requires two abnormal results from two different tests, like A1c and FPG.
 
 ## Comparison of Current Model to Diagnostic-Feature Models
-The diagnostic criterion illustrate a significance in measuring blood glucose levels when diagnosing for diabetes. Although body mass index (BMI) incoporates relevant risk factors associated with diabetes, individuals with similar BMI values can have substantial differences in glucose regulation, which explains our model's poor performance. Recent models predict diabetes with much higher ROC AUC scores using diagnostic tests as features over BMI. One logistic regression model had an ROC AUC score of 0.735 by predicting for dysglycemia among participants who met the criterion for both HbA1c and FP, with a total accuracy of 98.5% (Chadha et al. 2020). This is a large increase from our model's ROC AUC score of 0.69, indicating that our model does not predict diabetes as well as other models.
+
+The diagnostic criterion illustrate a significance in measuring blood glucose levels when diagnosing for diabetes. Although body mass index (BMI) incoporates relevant risk factors associated with diabetes, individuals with similar BMI values can have substantial differences in glucose regulation, which explains our model's poor performance. Recent models predict diabetes with much higher ROC AUC scores using diagnostic tests as features over BMI. One logistic regression model had an ROC AUC score of 0.735 by predicting for dysglycemia among participants who met the criterion for both HbA1c and FP, with a total accuracy of 98.5% (Chadha et al. 2020). This is a large increase from our model's ROC AUC score of `{python} auc_text`, indicating that our model does not predict diabetes as well as other models.
 
 ## Consequences of Ineffective Predictive Models
+
 Coupled with the poor AUC score, using BMI as a predictor led to significant false negative and false positive rates from our model. A false negative would classify diabetics as non-diabetic, which could lead to such patients either having delayed treatment or not being treated at all. This can have severe consequences, as the risk of complications increase exponentially with diabetes duration, of which include increased risk of stroke, myocardial infarction, heart failure, end-stage kidney disease, and mortality (Morton 2022). False positives would classify non-diabetics as diabetics, which could lead to non-health related consequences for patients undergoing treatment. In the US, people diagnosed with diabetes spend roughly 2.6 times more in medical expenditures than those without (Emily et al. 2022). Therefore, a false positive diagnosis could lead to unnecessary health-care costs on the patients, inapporprate use of medication on patients and their associated complications, and overall misallocation of hospital resources. These findings show that using our model could have devastating consequences if not corrected to improve on precision and recall rates.
 
 ## Our model does not account for other features associated with diabetes
@@ -317,38 +320,50 @@ Our model uses BMI as its only feature to predict diabetes status. As a result, 
 
 Adding other features associated with diabetes (Ismail, Materwala, and Al Kaabi 2021), such as, but not limited to, high blood pressure, high cholesterol, and smoking status, could improve our model's ability to predict diabetes.
 
-We explored only two model types, k-nearest neighbours (kNN) and logistic regression, to predict diabetes status from a single feature, BMI. Trying other models, and tuning their hyperparameters, could make our predictions more accurate and robust.
+We explored only explored logistic regression to predict diabetes status from a single feature, BMI. Trying other models, and tuning their hyperparameters, could make our predictions more accurate and robust.
 
 Finally, our data set describes U.S. adults, so our results may not fully reflect the Canadian population. Repeating this analysis with Canadian data would let us check whether the same relationships hold in Canada and would make our findings more statistically relevant from a Canadian public health perspective.
 
 
 # References
 
-American Diabetes Association Professional Practice Committee for Diabetes. 2026. “2. Diagnosis and Classification of Diabetes: Standards of Care in Diabetes—2026.” Diabetes Care 49 (Supplement 1): S27–S49. https://doi.org/10.2337/dc26-S002.
+American Diabetes Association Professional Practice Committee for Diabetes. 2026. "2. Diagnosis and Classification of Diabetes: Standards of Care in Diabetes—2026." *Diabetes Care* 49 (Supplement 1): S27–S49. https://doi.org/10.2337/dc26-S002.
 
-Centers for Disease Control and Prevention. 2015. “Behavioral Risk Factor Surveillance System Survey Data, 2015.” U.S. Department of Health and Human Services, Centers for Disease Control and Prevention.   https://www.cdc.gov/brfss/annual_data/annual_2015.html.
+Antar, S. A., N. A. Ashour, M. Sharaky, M. Khattab, N. A. Ashour, R. T. Zaid, E. J. Roh, A. Elkamhawy, and A. A. Al-Karmalawy. 2023. "Diabetes Mellitus: Classification, Mediators, and Complications; A Gate to Identify Potential Targets for the Development of New Effective Treatments." *Biomedicine & Pharmacotherapy* 168: 115734. https://doi.org/10.1016/j.biopha.2023.115734.
 
-“CDC Diabetes Health Indicators.” 2017. UCI Machine Learning Repository. https://doi.org/10.24432/C53919.
+"CDC Diabetes Health Indicators." 2017. UCI Machine Learning Repository. https://doi.org/10.24432/C53919.
 
-Chadha, C., A. G. Pittas, C. W. Lary, W. C. Knowler, R. Chatterjee, L. S. Phillips, V. R. Aroda, M. R. Lewis, R. Pratley, M. A. Staten, J. Nelson, N. Rasouli, I. Brodsky, and D2d Research Group. 2020. “Reproducibility of a Prediabetes Classification in a Contemporary Population.” Metabolism Open 6: 100031. https://doi.org/10.1016/j.metop.2020.100031.
+Centers for Disease Control and Prevention. 2015. "Behavioral Risk Factor Surveillance System Survey Data, 2015." U.S. Department of Health and Human Services, Centers for Disease Control and Prevention. https://www.cdc.gov/brfss/annual_data/annual_2015.html.
 
-Emily D. Parker, Janice Lin, Troy Mahoney, Nwanneamaka Ume, Grace Yang, Robert A. Gabbay, Nuha A. ElSayed, Raveendhara R. Bannuru; Economic Costs of Diabetes in the U.S. in 2022. Diabetes Care 2 January 2024; 47 (1): 26–43. https://doi.org/10.2337/dci23-0085
+Chadha, C., A. G. Pittas, C. W. Lary, W. C. Knowler, R. Chatterjee, L. S. Phillips, V. R. Aroda, et al. 2020. "Reproducibility of a Prediabetes Classification in a Contemporary Population." *Metabolism Open* 6: 100031. https://doi.org/10.1016/j.metop.2020.100031.
 
-Ismail, Leila, Huned Materwala, and Juma Al Kaabi. 2021. “Association of Risk Factors with Type 2 Diabetes: A Systematic Review.” Computational and Structural Biotechnology Journal 19: 1759–1785. https://doi.org/10.1016/j.csbj.2021.03.003.
+Connor Gorber, S., M. Shields, M. S. Tremblay, and I. McDowell. 2008. "The Feasibility of Establishing Correction Factors to Adjust Self-Reported Estimates of Obesity." *Health Reports* 19 (3): 71–82.
 
-Lasser, Karen E., David U. Himmelstein, and Steffie Woolhandler. 2006. "Access to Care, Health Status, and Health Disparities in the United States and Canada: Results of a Cross-National Population-Based Survey." American Journal of Public Health 96 (7): 1300–1307. https://doi.org/10.2105/AJPH.2004.059402.
+Diabetes Canada. n.d. "Diabetes in Canada." Diabetes Canada. https://www.diabetes.ca/what-is-diabetes/diabetes-in-canada.
 
-Morton, Jedidiah I., Peter A. Lazzarini, Kevan R. Polkinghorne, Bendix Carstensen, Dianna J. Magliano, and Jonathan E. Shaw. 2022. “The Association of Attained Age, Age at Diagnosis, and Duration of Type 2 Diabetes with the Long-Term Risk for Major Diabetes-Related Complications.” Diabetes Research and Clinical Practice 190: 110022. https://doi.org/10.1016/j.diabres.2022.110022
+Ismail, Leila, Huned Materwala, and Juma Al Kaabi. 2021. "Association of Risk Factors with Type 2 Diabetes: A Systematic Review." *Computational and Structural Biotechnology Journal* 19: 1759–1785. https://doi.org/10.1016/j.csbj.2021.03.003.
+
+Lasser, Karen E., David U. Himmelstein, and Steffie Woolhandler. 2006. "Access to Care, Health Status, and Health Disparities in the United States and Canada: Results of a Cross-National Population-Based Survey." *American Journal of Public Health* 96 (7): 1300–1307. https://doi.org/10.2105/AJPH.2004.059402.
+
+Morton, Jedidiah I., Peter A. Lazzarini, Kevan R. Polkinghorne, Bendix Carstensen, Dianna J. Magliano, and Jonathan E. Shaw. 2022. "The Association of Attained Age, Age at Diagnosis, and Duration of Type 2 Diabetes with the Long-Term Risk for Major Diabetes-Related Complications." *Diabetes Research and Clinical Practice* 190: 110022. https://doi.org/10.1016/j.diabres.2022.110022.
+
+Parker, Emily D., Janice Lin, Troy Mahoney, Nwanneamaka Ume, Grace Yang, Robert A. Gabbay, Nuha A. ElSayed, and Raveendhara R. Bannuru. 2024. "Economic Costs of Diabetes in the U.S. in 2022." *Diabetes Care* 47 (1): 26–43. https://doi.org/10.2337/dci23-0085.
 
 Public Health Agency of Canada. 2023. "Snapshot of Diabetes in Canada, 2023." Government of Canada. https://www.canada.ca/en/public-health/services/publications/diseases-conditions/snapshot-diabetes-canada-2023.html.
 
-Teboul, Alex. 2021. “Diabetes Health Indicators Dataset.” Kaggle. https://www.kaggle.com/datasets/alexteboul/diabetes-health-indicators-dataset.
+Public Health Agency of Canada. 2025. "Diabetes in Canada: An Interactive Report on Key Statistics: Overview." Government of Canada. https://health-infobase.canada.ca/diabetes/.
 
-UC Irvine Machine Learning Repository. 2023. “ucimlrepo: Package to Import Datasets from the UC Irvine Machine Learning Repository.” Python package version 0.0.7. https://github.com/uci-ml-repo/ucimlrepo.
+Rafiq, Shamaila, and Per Bendix Jeppesen. 2018. "Body Mass Index, Vitamin D, and Type 2 Diabetes: A Systematic Review and Meta-Analysis." *Nutrients* 10 (9): 1182. https://doi.org/10.3390/nu10091182.
 
-Rafiq, Shamaila, and Per Bendix Jeppesen. 2018. "Body Mass Index, Vitamin D, and Type 2 Diabetes: A Systematic Review and Meta-Analysis." Nutrients 10 (9): 1182. <https://doi.org/10.3390/nu10091182>.
+Robinson, Chris A., Gina Agarwal, and Kara Nerenberg. 2011. "Validating the CANRISK Prognostic Model for Assessing Diabetes Risk in Canada's Multi-Ethnic Population." *Chronic Diseases and Injuries in Canada* 32 (1): 19–31.
 
-Robinson, Chris A., Gina Agarwal, and Kara Nerenberg. 2011. "Validating the CANRISK Prognostic Model for Assessing Diabetes Risk in Canada's Multi-Ethnic Population." Chronic Diseases and Injuries in Canada 32 (1): 19–31.
+Statistics Canada. n.d.a. "Health of Canadians: Health Outcomes." Statistics Canada. https://www150.statcan.gc.ca/n1/pub/82-570-x/2024001/section2-eng.htm.
+
+Statistics Canada. n.d.b. "Table 13-10-0394-01: Leading Causes of Death, Total Population, by Age Group." Statistics Canada. https://doi.org/10.25318/1310039401-eng.
+
+Teboul, Alex. 2021. "Diabetes Health Indicators Dataset." Kaggle. https://www.kaggle.com/datasets/alexteboul/diabetes-health-indicators-dataset.
+
+UC Irvine Machine Learning Repository. 2023. "ucimlrepo: Package to Import Datasets from the UC Irvine Machine Learning Repository." Python package version 0.0.7. https://github.com/uci-ml-repo/ucimlrepo.
 
 
 # Extra Notes that can be deleted

@@ -18,7 +18,7 @@ Each row in the data set represents one survey respondent, giving 253,680 rows a
 ## Report
 
 The final report can be found:
-***github pages***
+<https://ubc-mds-2026-27.github.io/DSCI-522-diabetes-indicators-prediction/>
 (HTML)
 
 ## Usage

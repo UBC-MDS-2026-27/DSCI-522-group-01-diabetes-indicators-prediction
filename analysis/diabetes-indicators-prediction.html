@@ -2259,7 +2259,7 @@ var requirejs,require,define;(function(global,setTimeout){var req,s,head,baseEle
 
 <section id="imports" class="level1">
 <h1>Imports</h1>
-<div id="f6d5f026" class="cell" data-message="false" data-execution_count="1">
+<div id="5c3c4642" class="cell" data-message="false" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> altair <span class="im">as</span> alt</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
@@ -2273,28 +2273,21 @@ var requirejs,require,define;(function(global,setTimeout){var req,s,head,baseEle
 <span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># increase dataset rows limit, default 5000</span></span>
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>alt.data_transformers.enable(<span class="st">&quot;vegafusion&quot;</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="151">
+<div class="cell-output cell-output-display" data-execution_count="1">
 <pre><code>DataTransformerRegistry.enable(&#39;vegafusion&#39;)</code></pre>
 </div>
 </div>
 </section>
 <section id="summary" class="level1">
 <h1>Summary</h1>
-<p>In this project, we investigated whether body mass index (BMI) can be used to predict diabetes status. Using the CDC Diabetes Health Indicators data set, which contains 253,680 survey responses from U.S. adults collected through the 2015 Behavioral Risk Factor Surveillance System, we trained a logistic regression model with BMI as the only predictor and compared it with a dummy classifier that always predicts “no diabetes”. Because only a small proportion of respondents have diabetes, we used a class-balanced model and evaluated performance with the F1 score rather than accuracy alone. Exploratory analysis showed that individuals with diabetes tend to have higher BMI values, and our model correctly identified more than half of the diabetes cases in the test set, performing better than the baseline at detecting diabetes. However, the model also produced a large number of false positives and missed many true cases, indicating that BMI alone is not sufficient for reliable diabetes classification. These results suggest that BMI is only slightly useful but limited predictor, and that adding other known risk factors and validating the model on Canadian data would be needed before such a model could support Canadian public health efforts.</p>
+<p>In this project, we investigated whether body mass index (BMI) can be used to predict diabetes status. We used the CDC Diabetes Health Indicators data set, which contains 253,680 survey responses from U.S. adults collected through the 2015 Behavioral Risk Factor Surveillance System. We trained a logistic regression model with BMI as the only predictor and compared it with a dummy classifier that always predicts “no diabetes”. Because only a small proportion of respondents have diabetes, we used a class-balanced model and evaluated performance mainly with the F1 score rather than accuracy. Exploratory analysis showed that respondents with diabetes tend to have higher BMI values. Our model correctly identified more than half of the diabetes cases in the test set, whereas the baseline identified none. However, our model had lower overall accuracy than the baseline because it produced a large number of false positives, and it still missed many true cases. These results suggest that BMI is a useful but limited predictor of diabetes on its own. Adding other known risk factors and validating the model on Canadian data would be needed before such a model could support Canadian public health efforts.</p>
 </section>
 <section id="introduction" class="level1">
 <h1>Introduction</h1>
-<p>Diabetes mellitus (commonly referred to as just diabetes) is a metabolic disorder in which there is a lack of insulin secretation or development of insulin resistance (or a combination of both). The lack of insulin or response to insulin prevents the body from regulating blood glucose levels properly leading to development of a condition known as hyperglycemia. Short-term symptoms of hyperglycemia including dehydration, fatigue or weakness, and blurred vision. Hyperglycemia is also dangerous, as long-term effects include kidney damage, heart disease, and poor wound healing leading to a much higher risk of infections. Diabetes can classified as type 1 or type 2, with type 1 resulting from a lack of or no insulin production. Type 2 diabetes results from the body developing a resistance to insulin leading to the pancreas not being able to produce enough insulin. Depending on the type of diabetes a patient may require prescribed insulin and consistent blood glucose monitoring. <a href="https://www.sciencedirect.com/science/article/pii/S0753332223015329?via%3Dihub">Source</a></p>
-<p>Diabetes has a large impact on the health of Canadians, in 2023 to 2024 the Public Health Agency of Canada found that <a href="https://health-infobase.canada.ca/diabetes/">3.9 million Canadians</a> live with diagnosed diabetes. Diabetes is ranked 7th in leading causes of death in Canada, with more than <a href="https://doi.org/10.25318/1310039401-eng">6,874 deaths</a> diabetes related deaths in 2024 alone. Aside from health impacts, diabetes also has a significant financial burden on Canadians, in 2024 the costs of diabetes on the Canadian healthcare system totalled to <a href="https://www.diabetes.ca/what-is-diabetes/diabetes-in-canada">$18.25 billion</a>.</p>
-<p>From a public health perspective it is important to understand the impact of diabetes on Canadian as it can allow for more equitable allocation of health resources and better preventative education. Comparing provinces, <a href="https://www150.statcan.gc.ca/n1/pub/82-570-x/2024001/section2-eng.htm">Statistics Canada</a> report diabetes as more common in Newfoundland and Labrador (11.1%) and Nova Scotia (10.5%) when compared to British Columbia (6.8%). In the same report, diabetes is also much more prevalent in Canadians with a disability (16.6%) than those without (6.9%). <a href="https://www150.statcan.gc.ca/n1/pub/82-570-x/2024001/section2-eng.htm">Overweight and obesity are both risk factors for diabetes</a>, with body mass index (BMI) being one method of classifying body weight in relation to health risk. Understanding the impact of risk factors on diabetes prevalence can educate the public on developing healthy habits in order to minimize the development of diabetes. Understanding these regional variations in diabetes prevalence and its effect on Canadians is important to providing equitable healthcare and informing public health decisions.</p>
-<p>Our analysis aims to investigate the ability of using BMI as a predictor of diabetes status in Canadians. <a href="https://www150.statcan.gc.ca/n1/en/pub/82-003-x/2008003/article/10680-eng.pdf?st=K5h3zTVe">Previous literature</a> has found that when BMI values were correctly reported they provide a good measure of obesity prevalence. The ability of using BMI as a predictor of diabetes status supports obesisty being a key risk factor and BMI representing this risk. Our model provides insight into the risks associated with diabetes, while also providing better understanding on the strength of those risks. A model mapping the association between BMI and diabetes status can help inform health decisions and policy regarding diabetes.</p>
-<p>Citations (listed in order of appearance)</p>
-<p>Antar, S. A., Ashour, N. A., Sharaky, M., Khattab, M., Ashour, N. A., Zaid, R. T., Roh, E. J., Elkamhawy, A., &amp; Al-Karmalawy, A. A. (2023). Diabetes mellitus: Classification, mediators, and complications; A gate to identify potential targets for the development of new effective treatments. Biomedicine &amp; pharmacotherapy = Biomedecine &amp; pharmacotherapie, 168, 115734. https://doi.org/10.1016/j.biopha.2023.115734</p>
-<p>Public Health Agency of Canada. (2025, November 20). Diabetes in Canada: An interactive report on key statistics: Overview. Canada.ca. https://health-infobase.canada.ca/diabetes/</p>
-<p>Statistics Canada. Table 13-10-0394-01 Leading causes of death, total population, by age group</p>
-<p>Diabetes Canada. (n.d.). Diabetes in Canada. Diabetes Canada. https://www.diabetes.ca/what-is-diabetes/diabetes-in-canada</p>
-<p>Statistics Canada. (n.d.). Health of Canadians Health outcomes. Health Outcomes. https://www150.statcan.gc.ca/n1/pub/82-570-x/2024001/section2-eng.htm</p>
-<p>Connor Gorber, S., Shields, M., Tremblay, M. S., &amp; McDowell, I. (2008). The feasibility of establishing correction factors to adjust self-reported estimates of obesity. Health reports, 19(3), 71–82.</p>
+<p>Diabetes mellitus (commonly referred to as just diabetes) is a metabolic disorder in which there is a lack of insulin secretation or development of insulin resistance (or a combination of both). The lack of insulin or response to insulin prevents the body from regulating blood glucose levels properly leading to development of a condition known as hyperglycemia. Short-term symptoms of hyperglycemia including dehydration, fatigue or weakness, and blurred vision. Hyperglycemia is also dangerous, as long-term effects include kidney damage, heart disease, and poor wound healing leading to a much higher risk of infections. Diabetes can classified as type 1 or type 2, with type 1 resulting from a lack of or no insulin production. Type 2 diabetes results from the body developing a resistance to insulin leading to the pancreas not being able to produce enough insulin. Depending on the type of diabetes a patient may require prescribed insulin and consistent blood glucose monitoring (Antar et al. 2023).</p>
+<p>Diabetes has a large impact on the health of Canadians, in 2023 to 2024 the Public Health Agency of Canada found that 3.9 million Canadians (Public Health Agency of Canada 2025) live with diagnosed diabetes. Diabetes is ranked 7th in leading causes of death in Canada, with more than 6,874 deaths (Statistics Canada n.d.b) diabetes related deaths in 2024 alone. Aside from health impacts, diabetes also has a significant financial burden on Canadians, in 2024 the costs of diabetes on the Canadian healthcare system totalled to $18.25 billion (Diabetes Canada n.d.).</p>
+<p>From a public health perspective it is important to understand the impact of diabetes on Canadian as it can allow for more equitable allocation of health resources and better preventative education. Comparing provinces, Statistics Canada (Statistics Canada n.d.a) report diabetes as more common in Newfoundland and Labrador (11.1%) and Nova Scotia (10.5%) when compared to British Columbia (6.8%). In the same report, diabetes is also much more prevalent in Canadians with a disability (16.6%) than those without (6.9%). Overweight and obesity are both risk factors for diabetes (Statistics Canada n.d.a), with body mass index (BMI) being one method of classifying body weight in relation to health risk. Understanding the impact of risk factors on diabetes prevalence can educate the public on developing healthy habits in order to minimize the development of diabetes. Understanding these regional variations in diabetes prevalence and its effect on Canadians is important to providing equitable healthcare and informing public health decisions.</p>
+<p>Our analysis aims to investigate the ability of using BMI as a predictor of diabetes status in Canadians. Previous literature (Connor Gorber et al. 2008) has found that when BMI values were correctly reported they provide a good measure of obesity prevalence. The ability of using BMI as a predictor of diabetes status supports obesity being a key risk factor and BMI representing this risk. Our model provides insight into the risks associated with diabetes, while also providing better understanding on the strength of those risks. A model mapping the association between BMI and diabetes status can help inform health decisions and policy regarding diabetes.</p>
 </section>
 <section id="methods" class="level1">
 <h1>Methods</h1>
@@ -2304,7 +2297,7 @@ var requirejs,require,define;(function(global,setTimeout){var req,s,head,baseEle
 <p>Each row in the data set represents one survey respondent, giving 253,680 rows and 21 features with no missing values. The target variable, <code>Diabetes_binary</code>, indicates whether the respondent has no diabetes (0) or prediabetes or diabetes (1). The features include chronic health conditions (e.g., high blood pressure, high cholesterol, heart disease), lifestyle factors (e.g., BMI, smoking, physical activity, fruit and vegetable consumption), health care access, self-rated physical and mental health, and demographic information (sex, age group, education and income).</p>
 <p>(Note: Claude AI helped generate this description of how the data were curated and made publicly available)</p>
 <p>We download the data with the code below. The data are retrieved from the “CDC Diabetes Health Indicators” entry in the UCI Machine Learning Repository (ID 891) using the <code>ucimlrepo</code> Python package, which returns the features and the target variable as separate data frames. We combine them into a single data set and save it as <code>cdc_diabetes_health_indicators.csv</code> in <code>data/raw/</code>, so the analysis can be re-run from the saved file without downloading the data again.</p>
-<div id="4e3716eb" class="cell" data-execution_count="2">
+<div id="874341e6" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># path to the saved raw data</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>raw_path <span class="op">=</span> Path(<span class="st">&quot;../data/raw/cdc_diabetes_health_indicators.csv&quot;</span>)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -2327,12 +2320,11 @@ var requirejs,require,define;(function(global,setTimeout){var req,s,head,baseEle
 <span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(raw_path)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="splitting-our-data-into-training-and-test-set-please-change-this-subtitle-as-you-see-fit" class="level2">
-<h2 class="anchored" data-anchor-id="splitting-our-data-into-training-and-test-set-please-change-this-subtitle-as-you-see-fit">Splitting our data into training and test set (Please change this subtitle as you see fit)</h2>
+<section id="splitting-our-data-into-training-and-test-set" class="level2">
+<h2 class="anchored" data-anchor-id="splitting-our-data-into-training-and-test-set">Splitting our data into training and test set</h2>
 <p>To predict diabetes status, we first split the data into a training set (80%) and a test set (20%). Because most respondents do not have diabetes, we used a stratified split so that both sets have the same proportion of diabetic and non-diabetic respondents. The training and test sets were saved to <code>data/processed/</code>, and the test set was set aside until the final evaluation so it would not influence model building.</p>
 <p>We selected body mass index (BMI) as our only predictor and diabetes status as our target variable because our research question focuses on whether BMI alone can predict diabetes. By keeping only these two variables, we can evaluate the predictive ability of BMI focusing only on what need. Additionally, splitting the data now avoids using information from the test set to make modeling decisions.</p>
-<p>Below, we explain why we kept only body mass index (BMI) and the target variable (<code>Diabetes_binary</code>) from the raw data. In short, our exploratory analysis showed that respondents with diabetes tended to have higher BMI values than those without diabetes.</p>
-<div id="ee0e8d22" class="cell" data-execution_count="3">
+<div id="c8d1d6e4" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># select the target and prediction feature</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df[[<span class="st">&quot;BMI&quot;</span>, <span class="st">&quot;Diabetes_binary&quot;</span>]]</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -2370,7 +2362,7 @@ Testing shape: (50736, 2)</code></pre>
 <section id="body-mass-index-bmi-as-a-predictor-of-diabetes" class="level2">
 <h2 class="anchored" data-anchor-id="body-mass-index-bmi-as-a-predictor-of-diabetes">Body mass index (BMI) as a predictor of diabetes</h2>
 <p>High body mass index (BMI) is strongly associated with diabetes (Rafiq and Jeppesen 2018). Based on this, we first compared the distribution of BMI between individuals who have been diagnosed with diabetes and those who have not (Figure 1).</p>
-<div id="7d73f9de" class="cell" data-execution_count="4">
+<div id="bcc69f9c" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># use only the training data so the test set stays unseen</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># .copy() so adding a new column does not change train_df</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>plot_df <span class="op">=</span> train_df[[<span class="st">&quot;BMI&quot;</span>, <span class="st">&quot;Diabetes_binary&quot;</span>]].copy()</span>
@@ -2402,7 +2394,7 @@ Testing shape: (50736, 2)</code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> Image</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>Image(filename<span class="op">=</span>figures_dir <span class="op">/</span> <span class="st">&quot;bmi_distribution.png&quot;</span>, width<span class="op">=</span><span class="dv">650</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="155">
+<div class="cell-output cell-output-display" data-execution_count="5">
 <div id="fig-bmi-distribution" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-bmi-distribution-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -2416,13 +2408,13 @@ Figure 1: BMI distribution by diabetes status from train data.
 </div>
 </div>
 <p>Figure 1. shows that the BMI distribution for individuals with diabetes is shifted toward higher values compared with those without diabetes. This supports our choice of BMI as a predictor of diabetes status.</p>
-<div id="2ff20cc9" class="cell" data-execution_count="6">
+<div id="829822c0" class="cell" data-execution_count="6">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># BMI summary by diabetes status using training data</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>bmi_summary <span class="op">=</span> train_df.groupby(<span class="st">&quot;Diabetes_binary&quot;</span>)[<span class="st">&quot;BMI&quot;</span>].agg(</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    [<span class="st">&quot;count&quot;</span>, <span class="st">&quot;mean&quot;</span>, <span class="st">&quot;median&quot;</span>, <span class="st">&quot;std&quot;</span>]</span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>bmi_summary</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="156">
+<div class="cell-output cell-output-display" data-execution_count="6">
 <div>
 
 
@@ -2468,7 +2460,7 @@ Figure 1: BMI distribution by diabetes status from train data.
 <section id="applying-bmi-to-predict-diabetes-status" class="level2">
 <h2 class="anchored" data-anchor-id="applying-bmi-to-predict-diabetes-status">Applying BMI to predict diabetes status</h2>
 <p>We then built a logistic regression model in a pipeline that first standardizes BMI with <code>StandardScaler</code>. To address the class imbalance, we used grid search with 3-fold cross-validation to compare a standard logistic regression with a class-balanced version, which gives more weight to the smaller diabetic class during training. We used the F1 score as the evaluation metric because it balances precision and recall. Accuracy would be misleading here, since a model that predicts “no diabetes” for everyone would still score highly.</p>
-<div id="f0cedbef" class="cell" data-execution_count="7">
+<div id="77508b24" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># select BMI as the prediction feature and diabetes as the target</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>X_train <span class="op">=</span> train_df[[<span class="st">&quot;BMI&quot;</span>]]</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>y_train <span class="op">=</span> train_df[<span class="st">&quot;Diabetes_binary&quot;</span>]</span>
@@ -2482,7 +2474,7 @@ Figure 1: BMI distribution by diabetes status from train data.
 <span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    LogisticRegression(max_iter<span class="op">=</span><span class="dv">1000</span>)</span>
 <span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="87fbbc86" class="cell" data-execution_count="8">
+<div id="b04631d4" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># compare regular and balanced logistic regression</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>param_grid_logistic <span class="op">=</span> {</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;logisticregression__class_weight&quot;</span>: [<span class="va">None</span>, <span class="st">&quot;balanced&quot;</span>]</span>
@@ -2516,12 +2508,12 @@ Best CV F1: 0.3331567788698364</code></pre>
 <section id="baseline-comparison-with-a-dummy-classifier" class="level2">
 <h2 class="anchored" data-anchor-id="baseline-comparison-with-a-dummy-classifier">Baseline comparison with a dummy classifier</h2>
 <p>To judge whether our logistic regression model is actually learning from BMI, we compared it with a dummy classifier that ignores BMI entirely and always predicts the most common class, “no diabetes”. Because most respondents in our data set do not have diabetes, this baseline achieves a high accuracy without identifying a single diabetes case, giving it a recall and F1 score of zero. Comparing the two models shows how much predictive value BMI adds beyond simply guessing the majority class, and it highlights why accuracy alone is a misleading measure of performance for imbalanced data such as ours.</p>
-<div id="73808a06" class="cell" data-execution_count="9">
+<div id="a594b03b" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># baseline model: always predicts the most common class (no diabetes)</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co"># used to check that our model does better than simply guessing</span></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>dummy_model <span class="op">=</span> DummyClassifier(strategy<span class="op">=</span><span class="st">&quot;most_frequent&quot;</span>)</span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>dummy_model.fit(X_train, y_train)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="159">
+<div class="cell-output cell-output-display" data-execution_count="9">
 <style>.sk-global {
 
 --sklearn-color-text: #000;
@@ -3159,7 +3151,7 @@ a.param-doc-link::before {
   justify-content: center;
   margin-top: 0.5em;
 }
-</style><div id="sk-container-id-11" tabindex="0" class="sk-top-container sk-global"><div class="sk-text-repr-fallback"><pre>DummyClassifier(strategy=&#39;most_frequent&#39;)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br>On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually sk-global" id="sk-estimator-id-11" type="checkbox" checked><label for="sk-estimator-id-11" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>DummyClassifier</div></div><div><a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.9/modules/generated/sklearn.dummy.DummyClassifier.html">?<span>Documentation for DummyClassifier</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></div></label><div class="sk-toggleable__content fitted" data-param-prefix>
+</style><div id="sk-container-id-1" tabindex="0" class="sk-top-container sk-global"><div class="sk-text-repr-fallback"><pre>DummyClassifier(strategy=&#39;most_frequent&#39;)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br>On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator fitted sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually sk-global" id="sk-estimator-id-1" type="checkbox" checked><label for="sk-estimator-id-1" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>DummyClassifier</div></div><div><a class="sk-estimator-doc-link fitted" rel="noreferrer" target="_blank" href="https://scikit-learn.org/1.9/modules/generated/sklearn.dummy.DummyClassifier.html">?<span>Documentation for DummyClassifier</span></a><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></div></label><div class="sk-toggleable__content fitted" data-param-prefix>
         <div class="estimator-table">
             <details>
                 <summary>Parameters</summary>
@@ -3481,15 +3473,15 @@ function forceTheme(elementId) {
     }
 }
 
-forceTheme('sk-container-id-11');</script>
+forceTheme('sk-container-id-1');</script>
 </div>
 </div>
-<div id="c48e08ce" class="cell" data-execution_count="10">
+<div id="c6f1a503" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># predict diabetes using the test data</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>logistic_pred <span class="op">=</span> logistic_search.predict(X_test)</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>dummy_pred <span class="op">=</span> dummy_model.predict(X_test)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="1b539d6a" class="cell" data-execution_count="11">
+<div id="1796a58f" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate accuracy, precision, recall and F1 score for both models</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_scores(y_true, y_pred, y_prob):</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {</span>
@@ -3510,7 +3502,7 @@ forceTheme('sk-container-id-11');</script>
 <span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>    index<span class="op">=</span>[<span class="st">&quot;Dummy classifier (baseline)&quot;</span>, <span class="st">&quot;Logistic regression&quot;</span>]</span>
 <span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="221f7eb6" class="cell" data-execution_count="12">
+<div id="3e8f9265" class="cell" data-execution_count="12">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># compare the predicted and actual diabetes status</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>confusion_matrix <span class="op">=</span> pd.crosstab(</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    y_test,</span>
@@ -3519,10 +3511,10 @@ forceTheme('sk-container-id-11');</script>
 <span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    colnames<span class="op">=</span>[<span class="st">&quot;Predicted diabetes status&quot;</span>]</span>
 <span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="d1275cde" class="cell" data-execution_count="13">
+<div id="d1416068" class="cell" data-execution_count="13">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># accuracy, precision, recall and F1 score in a df</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>score_results</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="163">
+<div class="cell-output cell-output-display" data-execution_count="13">
 <div>
 
 
@@ -3560,10 +3552,10 @@ forceTheme('sk-container-id-11');</script>
 </div>
 </div>
 </div>
-<div id="2dfb944b" class="cell" data-execution_count="14">
+<div id="a1249312" class="cell" data-execution_count="14">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># confusion matrix in a df</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>confusion_matrix</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-display" data-execution_count="164">
+<div class="cell-output cell-output-display" data-execution_count="14">
 <div>
 
 
@@ -3597,7 +3589,7 @@ forceTheme('sk-container-id-11');</script>
 </div>
 </div>
 </div>
-<div id="660d1145" class="cell" data-execution_count="15">
+<div id="416c0085" class="cell" data-execution_count="15">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># values reported in the text below, so the numbers update automatically</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Markdown() keeps the formatting (e.g. trailing zeros) when shown inline</span></span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> Markdown</span>
@@ -3624,17 +3616,17 @@ forceTheme('sk-container-id-11');</script>
 </section>
 <section id="discussion" class="level1">
 <h1>Discussion</h1>
-<section id="the-canadian-gold-standard-for-diagnosing" class="level2">
-<h2 class="anchored" data-anchor-id="the-canadian-gold-standard-for-diagnosing">The Canadian Gold Standard for diagnosing</h2>
+<section id="diabetes-diagnostic-testing" class="level2">
+<h2 class="anchored" data-anchor-id="diabetes-diagnostic-testing">Diabetes Diagnostic Testing</h2>
 <p>There are several criterion used for diagnosing diabetes. These diagnostic tests include the HbA1c test that measures levels of glycated hemoglobin (A1c) greater than or equal to 6.5%, plasma glucose criterion measuring the levels of fasting plasma glucose (FPG) greater than or equal to 126 mg/dL or 2-h plasma glucose (2-h PG) during a 75g oral glucose tolerance test greater than or equal to 200 mg/dL, and classic symptoms of hyperglycemia such as polyuria, polydipsia, and unexplained weight loss (American 2026). Where hyperglycemia isn’t already diagnosed in such patients, diabetes diagnosis requires two abnormal results from two different tests, like A1c and FPG.</p>
 </section>
-<section id="the-limitation-of-our-model-because-our-model-is-underperforming-compared-to-gold-standard" class="level2">
-<h2 class="anchored" data-anchor-id="the-limitation-of-our-model-because-our-model-is-underperforming-compared-to-gold-standard">The limitation of our model because our model is underperforming compared to Gold Standard</h2>
-<p>The diagnostic criterion illustrate a high significance in measuring blood glucose levels when diagnosing for diabetes. Although body mass index (BMI) incoporates relevant risk factors associated with diabetes, individuals with similar BMI values can have substantial differences in glucose regulation. The model underperforms to a predictive model using the diagnostic tests, which found that over 98.6% of participants who met the criterion for both HbA1c and FPG exhibited dysglycemia, of which 84.5% were classified as prediabetic and 14.1% as diabetic (Chadha et al. 2020).</p>
+<section id="comparison-of-current-model-to-diagnostic-feature-models" class="level2">
+<h2 class="anchored" data-anchor-id="comparison-of-current-model-to-diagnostic-feature-models">Comparison of Current Model to Diagnostic-Feature Models</h2>
+<p>The diagnostic criterion illustrate a significance in measuring blood glucose levels when diagnosing for diabetes. Although body mass index (BMI) incoporates relevant risk factors associated with diabetes, individuals with similar BMI values can have substantial differences in glucose regulation, which explains our model’s poor performance. Recent models predict diabetes with much higher ROC AUC scores using diagnostic tests as features over BMI. One logistic regression model had an ROC AUC score of 0.735 by predicting for dysglycemia among participants who met the criterion for both HbA1c and FP, with a total accuracy of 98.5% (Chadha et al. 2020). This is a large increase from our model’s ROC AUC score of 0.6924, indicating that our model does not predict diabetes as well as other models.</p>
 </section>
-<section id="our-model-should-not-be-used-to-diagnose-diabetes" class="level2">
-<h2 class="anchored" data-anchor-id="our-model-should-not-be-used-to-diagnose-diabetes">Our model should not be used to diagnose diabetes</h2>
-<p>As shown, using BMI as a predictor led to significant false negative and false positive rates from our model. A false negative would classify diabetics as non-diabetic, which could lead to such patients either having delayed treatment or not being treated at all. This can have severe consequences, as the risk of complications increase exponentially with diabetes duration, of which include increased risk of stroke, myocardial infarction, heart failure, end-stage kidney disease, and mortality (Morton 2022). False positives would classify non-diabetics as diabetics, which could lead to non-health related consequences for patients undergoing treatment. In the US, people diagnosed with diabetes spend roughly 2.6 times more in medical expenditures than those without (Emily et al. 2022). Therefore, a false positive diagnosis could lead to unnecessary health-care costs on the patients, inapporprate use of medication on patients and their associated complications, and overall misallocation of hospital resources. These findings show that using our model could have devastating consequences if not corrected to improve on precision and recall rates.</p>
+<section id="consequences-of-ineffective-predictive-models" class="level2">
+<h2 class="anchored" data-anchor-id="consequences-of-ineffective-predictive-models">Consequences of Ineffective Predictive Models</h2>
+<p>Coupled with the poor AUC score, using BMI as a predictor led to significant false negative and false positive rates from our model. A false negative would classify diabetics as non-diabetic, which could lead to such patients either having delayed treatment or not being treated at all. This can have severe consequences, as the risk of complications increase exponentially with diabetes duration, of which include increased risk of stroke, myocardial infarction, heart failure, end-stage kidney disease, and mortality (Morton 2022). False positives would classify non-diabetics as diabetics, which could lead to non-health related consequences for patients undergoing treatment. In the US, people diagnosed with diabetes spend roughly 2.6 times more in medical expenditures than those without (Emily et al. 2022). Therefore, a false positive diagnosis could lead to unnecessary health-care costs on the patients, inapporprate use of medication on patients and their associated complications, and overall misallocation of hospital resources. These findings show that using our model could have devastating consequences if not corrected to improve on precision and recall rates.</p>
 </section>
 <section id="our-model-does-not-account-for-other-features-associated-with-diabetes" class="level2">
 <h2 class="anchored" data-anchor-id="our-model-does-not-account-for-other-features-associated-with-diabetes">Our model does not account for other features associated with diabetes</h2>
@@ -3643,25 +3635,31 @@ forceTheme('sk-container-id-11');</script>
 <section id="potentially-improving-our-predictive-model" class="level2">
 <h2 class="anchored" data-anchor-id="potentially-improving-our-predictive-model">Potentially improving our predictive model</h2>
 <p>Adding other features associated with diabetes (Ismail, Materwala, and Al Kaabi 2021), such as, but not limited to, high blood pressure, high cholesterol, and smoking status, could improve our model’s ability to predict diabetes.</p>
-<p>We explored only two model types, k-nearest neighbours (kNN) and logistic regression, to predict diabetes status from a single feature, BMI. Trying other models, and tuning their hyperparameters, could make our predictions more accurate and robust.</p>
+<p>We explored only explored logistic regression to predict diabetes status from a single feature, BMI. Trying other models, and tuning their hyperparameters, could make our predictions more accurate and robust.</p>
 <p>Finally, our data set describes U.S. adults, so our results may not fully reflect the Canadian population. Repeating this analysis with Canadian data would let us check whether the same relationships hold in Canada and would make our findings more statistically relevant from a Canadian public health perspective.</p>
 </section>
 </section>
 <section id="references" class="level1">
 <h1>References</h1>
-<p>American Diabetes Association Professional Practice Committee for Diabetes. 2026. “2. Diagnosis and Classification of Diabetes: Standards of Care in Diabetes—2026.” Diabetes Care 49 (Supplement 1): S27–S49. https://doi.org/10.2337/dc26-S002.</p>
-<p>Centers for Disease Control and Prevention. 2015. “Behavioral Risk Factor Surveillance System Survey Data, 2015.” U.S. Department of Health and Human Services, Centers for Disease Control and Prevention. https://www.cdc.gov/brfss/annual_data/annual_2015.html.</p>
+<p>American Diabetes Association Professional Practice Committee for Diabetes. 2026. “2. Diagnosis and Classification of Diabetes: Standards of Care in Diabetes—2026.” <em>Diabetes Care</em> 49 (Supplement 1): S27–S49. https://doi.org/10.2337/dc26-S002.</p>
+<p>Antar, S. A., N. A. Ashour, M. Sharaky, M. Khattab, N. A. Ashour, R. T. Zaid, E. J. Roh, A. Elkamhawy, and A. A. Al-Karmalawy. 2023. “Diabetes Mellitus: Classification, Mediators, and Complications; A Gate to Identify Potential Targets for the Development of New Effective Treatments.” <em>Biomedicine &amp; Pharmacotherapy</em> 168: 115734. https://doi.org/10.1016/j.biopha.2023.115734.</p>
 <p>“CDC Diabetes Health Indicators.” 2017. UCI Machine Learning Repository. https://doi.org/10.24432/C53919.</p>
-<p>Chadha, C., A. G. Pittas, C. W. Lary, W. C. Knowler, R. Chatterjee, L. S. Phillips, V. R. Aroda, M. R. Lewis, R. Pratley, M. A. Staten, J. Nelson, N. Rasouli, I. Brodsky, and D2d Research Group. 2020. “Reproducibility of a Prediabetes Classification in a Contemporary Population.” Metabolism Open 6: 100031. https://doi.org/10.1016/j.metop.2020.100031.</p>
-<p>Emily D. Parker, Janice Lin, Troy Mahoney, Nwanneamaka Ume, Grace Yang, Robert A. Gabbay, Nuha A. ElSayed, Raveendhara R. Bannuru; Economic Costs of Diabetes in the U.S. in 2022. Diabetes Care 2 January 2024; 47 (1): 26–43. https://doi.org/10.2337/dci23-0085</p>
-<p>Ismail, Leila, Huned Materwala, and Juma Al Kaabi. 2021. “Association of Risk Factors with Type 2 Diabetes: A Systematic Review.” Computational and Structural Biotechnology Journal 19: 1759–1785. https://doi.org/10.1016/j.csbj.2021.03.003.</p>
-<p>Lasser, Karen E., David U. Himmelstein, and Steffie Woolhandler. 2006. “Access to Care, Health Status, and Health Disparities in the United States and Canada: Results of a Cross-National Population-Based Survey.” American Journal of Public Health 96 (7): 1300–1307. https://doi.org/10.2105/AJPH.2004.059402.</p>
-<p>Morton, Jedidiah I., Peter A. Lazzarini, Kevan R. Polkinghorne, Bendix Carstensen, Dianna J. Magliano, and Jonathan E. Shaw. 2022. “The Association of Attained Age, Age at Diagnosis, and Duration of Type 2 Diabetes with the Long-Term Risk for Major Diabetes-Related Complications.” Diabetes Research and Clinical Practice 190: 110022. https://doi.org/10.1016/j.diabres.2022.110022</p>
+<p>Centers for Disease Control and Prevention. 2015. “Behavioral Risk Factor Surveillance System Survey Data, 2015.” U.S. Department of Health and Human Services, Centers for Disease Control and Prevention. https://www.cdc.gov/brfss/annual_data/annual_2015.html.</p>
+<p>Chadha, C., A. G. Pittas, C. W. Lary, W. C. Knowler, R. Chatterjee, L. S. Phillips, V. R. Aroda, et al. 2020. “Reproducibility of a Prediabetes Classification in a Contemporary Population.” <em>Metabolism Open</em> 6: 100031. https://doi.org/10.1016/j.metop.2020.100031.</p>
+<p>Connor Gorber, S., M. Shields, M. S. Tremblay, and I. McDowell. 2008. “The Feasibility of Establishing Correction Factors to Adjust Self-Reported Estimates of Obesity.” <em>Health Reports</em> 19 (3): 71–82.</p>
+<p>Diabetes Canada. n.d. “Diabetes in Canada.” Diabetes Canada. https://www.diabetes.ca/what-is-diabetes/diabetes-in-canada.</p>
+<p>Ismail, Leila, Huned Materwala, and Juma Al Kaabi. 2021. “Association of Risk Factors with Type 2 Diabetes: A Systematic Review.” <em>Computational and Structural Biotechnology Journal</em> 19: 1759–1785. https://doi.org/10.1016/j.csbj.2021.03.003.</p>
+<p>Lasser, Karen E., David U. Himmelstein, and Steffie Woolhandler. 2006. “Access to Care, Health Status, and Health Disparities in the United States and Canada: Results of a Cross-National Population-Based Survey.” <em>American Journal of Public Health</em> 96 (7): 1300–1307. https://doi.org/10.2105/AJPH.2004.059402.</p>
+<p>Morton, Jedidiah I., Peter A. Lazzarini, Kevan R. Polkinghorne, Bendix Carstensen, Dianna J. Magliano, and Jonathan E. Shaw. 2022. “The Association of Attained Age, Age at Diagnosis, and Duration of Type 2 Diabetes with the Long-Term Risk for Major Diabetes-Related Complications.” <em>Diabetes Research and Clinical Practice</em> 190: 110022. https://doi.org/10.1016/j.diabres.2022.110022.</p>
+<p>Parker, Emily D., Janice Lin, Troy Mahoney, Nwanneamaka Ume, Grace Yang, Robert A. Gabbay, Nuha A. ElSayed, and Raveendhara R. Bannuru. 2024. “Economic Costs of Diabetes in the U.S. in 2022.” <em>Diabetes Care</em> 47 (1): 26–43. https://doi.org/10.2337/dci23-0085.</p>
 <p>Public Health Agency of Canada. 2023. “Snapshot of Diabetes in Canada, 2023.” Government of Canada. https://www.canada.ca/en/public-health/services/publications/diseases-conditions/snapshot-diabetes-canada-2023.html.</p>
+<p>Public Health Agency of Canada. 2025. “Diabetes in Canada: An Interactive Report on Key Statistics: Overview.” Government of Canada. https://health-infobase.canada.ca/diabetes/.</p>
+<p>Rafiq, Shamaila, and Per Bendix Jeppesen. 2018. “Body Mass Index, Vitamin D, and Type 2 Diabetes: A Systematic Review and Meta-Analysis.” <em>Nutrients</em> 10 (9): 1182. https://doi.org/10.3390/nu10091182.</p>
+<p>Robinson, Chris A., Gina Agarwal, and Kara Nerenberg. 2011. “Validating the CANRISK Prognostic Model for Assessing Diabetes Risk in Canada’s Multi-Ethnic Population.” <em>Chronic Diseases and Injuries in Canada</em> 32 (1): 19–31.</p>
+<p>Statistics Canada. n.d.a. “Health of Canadians: Health Outcomes.” Statistics Canada. https://www150.statcan.gc.ca/n1/pub/82-570-x/2024001/section2-eng.htm.</p>
+<p>Statistics Canada. n.d.b. “Table 13-10-0394-01: Leading Causes of Death, Total Population, by Age Group.” Statistics Canada. https://doi.org/10.25318/1310039401-eng.</p>
 <p>Teboul, Alex. 2021. “Diabetes Health Indicators Dataset.” Kaggle. https://www.kaggle.com/datasets/alexteboul/diabetes-health-indicators-dataset.</p>
 <p>UC Irvine Machine Learning Repository. 2023. “ucimlrepo: Package to Import Datasets from the UC Irvine Machine Learning Repository.” Python package version 0.0.7. https://github.com/uci-ml-repo/ucimlrepo.</p>
-<p>Rafiq, Shamaila, and Per Bendix Jeppesen. 2018. “Body Mass Index, Vitamin D, and Type 2 Diabetes: A Systematic Review and Meta-Analysis.” Nutrients 10 (9): 1182. <a href="https://doi.org/10.3390/nu10091182" class="uri">https://doi.org/10.3390/nu10091182</a>.</p>
-<p>Robinson, Chris A., Gina Agarwal, and Kara Nerenberg. 2011. “Validating the CANRISK Prognostic Model for Assessing Diabetes Risk in Canada’s Multi-Ethnic Population.” Chronic Diseases and Injuries in Canada 32 (1): 19–31.</p>
 </section>
 <section id="extra-notes-that-can-be-deleted" class="level1">
 <h1>Extra Notes that can be deleted</h1>

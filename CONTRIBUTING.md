@@ -2,9 +2,9 @@
 
 Input, feedback, bug reports, and contributions to our analysis can be made via the [Diabetes Indicator Prediction GitHub Repository](https://github.com/UBC-MDS-2026-27/DSCI-522-group-01-diabetes-indicators-prediction)
 
-## How to Contribute
+## How to contribute
 
-### Setting Up Your Environment
+### Setting up your environment
 
 First install [uv](https://docs.astral.sh/uv/getting-started/installation/) and [Quarto](https://quarto.org/docs/get-started/) 
 
@@ -22,7 +22,7 @@ To run our analysis and render the report
 uv run quarto render
 ```
 
-### Creating a Branch
+### Creating a branch
 
 Create a new branch to contain a new contribution, contributions should be pushed to the new branch. It is important to always create a new branch instead of directly making changes to the main branch. 
 
@@ -41,7 +41,7 @@ Example branch name
 ```cmd
 docs/updating-contribution-guidelines
 ```
-### Creating a Pull Request
+### Creating a pull request
 
 After your contributions are made, they can be committed to the corresponding branch by running
 
@@ -53,11 +53,11 @@ git push origin <your-branch-name>
 
 After pushing you will need to submit a pull request on GitHub asking to merge the new contributing branch to the main branch. Please include details/explaination of the contribution within the pull request and assign all current team members as reviewers of the request. Feedback to the pull request will be given in the pull request discussion. 
 
-## Code of Conduct
+## Code of conduct
 
 This project's code of conduct can be found [here](https://github.com/UBC-MDS-2026-27/DSCI-522-group-01-diabetes-indicators-prediction/blob/main/CODE_OF_CONDUCT.md). By contributing to this project you agree to abide by these terms.
 
-## AI Use Policy
+## AI use policy
 
 The definition of "AI" under this policy includes generative AI tools such as large language models (LLMs) that have the capabilities to generate, edit, and review code. 
 

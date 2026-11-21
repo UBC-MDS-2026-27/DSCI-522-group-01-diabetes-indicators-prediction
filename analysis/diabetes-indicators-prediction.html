@@ -2259,7 +2259,7 @@ var requirejs,require,define;(function(global,setTimeout){var req,s,head,baseEle
 
 <section id="imports" class="level1">
 <h1>Imports</h1>
-<div id="ea25b4c2" class="cell" data-message="false" data-execution_count="1">
+<div id="d855efac" class="cell" data-message="false" data-execution_count="1">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> altair <span class="im">as</span> alt</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
@@ -2297,7 +2297,7 @@ var requirejs,require,define;(function(global,setTimeout){var req,s,head,baseEle
 <p>Each row in the data set represents one survey respondent, giving 253,680 rows and 21 features with no missing values. The target variable, diabetes status, indicates whether the respondent has no diabetes (0) or has prediabetes or diabetes (1). The features include chronic health conditions (e.g., high blood pressure, high cholesterol, heart disease), lifestyle factors (e.g., BMI, smoking, physical activity, fruit and vegetable consumption), health care access, self-rated physical and mental health, and demographic information (sex, age group, education, and income).</p>
 <p>(Note: Claude AI helped generate this description of how the data were curated and made publicly available)</p>
 <p>We download the data with the code below. The data are retrieved from the “CDC Diabetes Health Indicators” entry in the UCI Machine Learning Repository (ID 891) using the ucimlrepo Python package, which returns the features and the target variable as separate data frames. We combine them into a single data set and save it as <code>cdc_diabetes_health_indicators.csv</code> in <code>data/raw/</code>, so the analysis can be re-run from the saved file without downloading the data again.</p>
-<div id="34760b6b" class="cell" data-execution_count="2">
+<div id="7eb599f7" class="cell" data-execution_count="2">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># path to the saved raw data</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>raw_path <span class="op">=</span> Path(<span class="st">&quot;../data/raw/cdc_diabetes_health_indicators.csv&quot;</span>)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -2324,7 +2324,7 @@ var requirejs,require,define;(function(global,setTimeout){var req,s,head,baseEle
 <h2 class="anchored" data-anchor-id="splitting-our-data-into-training-and-test-sets">Splitting our data into training and test sets</h2>
 <p>To predict diabetes status, we first split the data into a training set (80%) and a test set (20%). Because most respondents do not have diabetes, we used a stratified split so that both sets have the same proportion of diabetic and non-diabetic respondents. The training and test sets were saved to <code>data/processed/</code>, and the test set was set aside until the final evaluation so that it would not influence model building.</p>
 <p>We selected BMI as our only predictor and diabetes status as our target variable because our research question focuses on whether BMI alone can predict diabetes. Keeping only these two variables lets us evaluate the predictive ability of BMI on its own. Additionally, splitting the data at this stage avoids using information from the test set to make modelling decisions.</p>
-<div id="ad4147c7" class="cell" data-execution_count="3">
+<div id="967ed8ca" class="cell" data-execution_count="3">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># select the target and prediction feature</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df[[<span class="st">&quot;BMI&quot;</span>, <span class="st">&quot;Diabetes_binary&quot;</span>]]</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -2362,7 +2362,7 @@ Test set (rows, columns): (50736, 2)</code></pre>
 <section id="body-mass-index-as-a-predictor-of-diabetes" class="level2">
 <h2 class="anchored" data-anchor-id="body-mass-index-as-a-predictor-of-diabetes">Body mass index as a predictor of diabetes</h2>
 <p>High BMI is strongly associated with diabetes (Rafiq and Jeppesen 2018). Based on this, we first compared the distribution of BMI between respondents with diabetes or prediabetes and those without (<a href="#fig-bmi-distribution" class="quarto-xref">Figure 1</a>).</p>
-<div id="17a2a212" class="cell" data-execution_count="4">
+<div id="c009c110" class="cell" data-execution_count="4">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># use only the training data so the test set stays unseen</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># .copy() so adding a new column does not change train_df</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>plot_df <span class="op">=</span> train_df[[<span class="st">&quot;BMI&quot;</span>, <span class="st">&quot;Diabetes_binary&quot;</span>]].copy()</span>
@@ -2476,7 +2476,7 @@ Table 1: Summary statistics of BMI by diabetes status in the training data.
 <section id="applying-bmi-to-predict-diabetes-status" class="level2">
 <h2 class="anchored" data-anchor-id="applying-bmi-to-predict-diabetes-status">Applying BMI to predict diabetes status</h2>
 <p>We then built a logistic regression model in a pipeline that first standardizes BMI, rescaling it to have a mean of 0 and a standard deviation of 1. To address the class imbalance, we used grid search with 3-fold cross-validation to compare a standard logistic regression with a class-balanced version, which gives more weight to the smaller diabetic class during training. We used the F1 score as the evaluation metric because it balances precision and recall. Accuracy would be misleading here, since a model that predicts “no diabetes” for everyone would still score highly.</p>
-<div id="4d5a3fd1" class="cell" data-execution_count="7">
+<div id="cd898d71" class="cell" data-execution_count="7">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># select BMI as the prediction feature and diabetes as the target</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>X_train <span class="op">=</span> train_df[[<span class="st">&quot;BMI&quot;</span>]]</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>y_train <span class="op">=</span> train_df[<span class="st">&quot;Diabetes_binary&quot;</span>]</span>
@@ -2490,7 +2490,7 @@ Table 1: Summary statistics of BMI by diabetes status in the training data.
 <span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    LogisticRegression(max_iter<span class="op">=</span><span class="dv">1000</span>)</span>
 <span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="72db2d17" class="cell" data-execution_count="8">
+<div id="22616619" class="cell" data-execution_count="8">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># compare regular and balanced logistic regression</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>param_grid_logistic <span class="op">=</span> {</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">&quot;logisticregression__class_weight&quot;</span>: [<span class="va">None</span>, <span class="st">&quot;balanced&quot;</span>]</span>
@@ -2525,7 +2525,7 @@ Mean cross-validation F1 score: 0.3332</code></pre>
 <section id="baseline-comparison-with-a-dummy-classifier" class="level2">
 <h2 class="anchored" data-anchor-id="baseline-comparison-with-a-dummy-classifier">Baseline comparison with a dummy classifier</h2>
 <p>To judge whether our logistic regression model is actually learning from BMI, we compared it with a dummy classifier that ignores BMI entirely and always predicts the most common class, “no diabetes”. Because most respondents in our data set do not have diabetes, this baseline achieves a high accuracy without identifying a single diabetes case, giving it a recall and F1 score of zero. Comparing the two models shows how much predictive value BMI adds beyond simply guessing the majority class, and it highlights why accuracy alone is a misleading measure of performance for imbalanced data such as ours.</p>
-<div id="ec92132e" class="cell" data-execution_count="9">
+<div id="85be50d2" class="cell" data-execution_count="9">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># baseline model: always predicts the most common class (no diabetes)</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="co"># used to check that our model does better than simply guessing</span></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>dummy_model <span class="op">=</span> DummyClassifier(strategy<span class="op">=</span><span class="st">&quot;most_frequent&quot;</span>)</span>
@@ -2534,7 +2534,7 @@ Mean cross-validation F1 score: 0.3332</code></pre>
 </section>
 <section id="predicting-diabetes-status-on-the-test-set" class="level2">
 <h2 class="anchored" data-anchor-id="predicting-diabetes-status-on-the-test-set">Predicting diabetes status on the test set</h2>
-<div id="36443cfe" class="cell" data-execution_count="10">
+<div id="9da56a26" class="cell" data-execution_count="10">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># predict diabetes using the test data</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>logistic_pred <span class="op">=</span> logistic_search.predict(X_test)</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>dummy_pred <span class="op">=</span> dummy_model.predict(X_test)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -2543,7 +2543,7 @@ Mean cross-validation F1 score: 0.3332</code></pre>
 <section id="evaluating-model-performance" class="level2">
 <h2 class="anchored" data-anchor-id="evaluating-model-performance">Evaluating model performance</h2>
 <p>We evaluated both models on the test set using accuracy, precision, recall, F1 score, and the area under the receiver operating characteristic curve (ROC AUC), which measures how well a model ranks respondents with diabetes above those without, regardless of the classification threshold.</p>
-<div id="b5c4c5bc" class="cell" data-execution_count="11">
+<div id="f8c53032" class="cell" data-execution_count="11">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># calculate accuracy, precision, recall, F1 score and ROC AUC for both models</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> get_scores(y_true, y_pred, y_prob):</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> {</span>
@@ -2564,7 +2564,7 @@ Mean cross-validation F1 score: 0.3332</code></pre>
 <span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>    index<span class="op">=</span>[<span class="st">&quot;Dummy classifier (baseline)&quot;</span>, <span class="st">&quot;Logistic regression&quot;</span>]</span>
 <span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div id="db296748" class="cell" data-execution_count="12">
+<div id="b41766d2" class="cell" data-execution_count="12">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># compare the predicted and actual diabetes status</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>confusion_matrix <span class="op">=</span> pd.crosstab(</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    y_test,</span>
@@ -2680,7 +2680,7 @@ Table 3: Confusion matrix of the logistic regression model on the test set.
 </section>
 <section id="interpreting-the-results" class="level2">
 <h2 class="anchored" data-anchor-id="interpreting-the-results">Interpreting the results</h2>
-<div id="9e56457a" class="cell" data-execution_count="15">
+<div id="740d3c8e" class="cell" data-execution_count="15">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># values reported in the text below, so the numbers update automatically</span></span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Markdown() keeps the formatting (e.g. trailing zeros) when shown inline</span></span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> Markdown</span>

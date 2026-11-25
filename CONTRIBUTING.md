@@ -10,7 +10,7 @@ First install [uv](https://docs.astral.sh/uv/getting-started/installation/) and 
 
 Next clone the repository and launch the virtual environment from the root of the repository 
 
-```cmd
+```bash
 git clone https://github.com/UBC-MDS-2026-27/DSCI-522-group-01-diabetes-indicators-prediction
 cd DSCI-522-group-01-diabetes-indicators-prediction
 uv sync
@@ -18,7 +18,7 @@ uv sync
 
 To run our analysis and render the report
 
-```cmd
+```bash
 uv run quarto render
 ```
 
@@ -26,26 +26,26 @@ uv run quarto render
 
 Create a new branch to contain a new contribution, contributions should be pushed to the new branch. It is important to always create a new branch instead of directly making changes to the main branch. 
 
-```cmd
+```bash
 git switch -c <your-branch-name>
 ```
 
 Branch naming convention should follow this format
 
-```cmd
+```bash
 <type>/<description>
 ```
 
 Example branch name
 
-```cmd
+```bash
 docs/updating-contribution-guidelines
 ```
 ### Creating a pull request
 
 After your contributions are made, they can be committed to the corresponding branch by running
 
-```cmd
+```bash
 git add <modified-file>
 git commit -m "descriptive message about the contribution made"
 git push origin <your-branch-name>

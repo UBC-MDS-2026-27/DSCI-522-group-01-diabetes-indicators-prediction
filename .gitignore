@@ -6,3 +6,4 @@ env/
 .env
 /.quarto/
 **/*.quarto_ipynb
+.Rhistory

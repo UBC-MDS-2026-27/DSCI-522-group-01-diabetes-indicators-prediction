@@ -22,7 +22,7 @@ The final report can be found:
 
 ## Usage 
 
-Our analysis should be ran inside a Docker container, ensuring everyone uses the same software and package versions. The image is published on Docker Hub at [link name]()
+Our analysis should be ran inside a Docker container, ensuring everyone uses the same software and package versions. The image is published on Docker Hub at [Docker dsci-522-group-01-diabetes-indicators-prediction](https://hub.docker.com/r/agutzz/dsci-522-group-01-diabetes-indicators-prediction/)
 
 ### Setup
 

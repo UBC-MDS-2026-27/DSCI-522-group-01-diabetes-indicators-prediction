@@ -92,6 +92,7 @@ so a file you change there changes on your computer too.
    ``` bash
    docker compose down
    ```
+ 
 <details>
 
 <details>
@@ -116,8 +117,8 @@ so a file you change there changes on your computer too.
   to another number (e.g. `2223`), and connect to that port instead.
 
 More detail: [Working in a container over ssh with Positron](https://ubc-dsci.github.io/reproducible-and-trustworthy-workflows-for-data-science/lectures/containers-ssh-positron.html).
-</details>
 
+</details>
 
 To re-run the analysis and render the report without opening the container:
 

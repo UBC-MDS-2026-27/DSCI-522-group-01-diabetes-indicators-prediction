@@ -18,8 +18,7 @@ Each row in the data set represents one survey respondent, giving 253,680 rows a
 ## Report
 
 The final report can be found:
-<https://ubc-mds-2026-27.github.io/DSCI-522-diabetes-indicators-prediction/>
-(HTML)
+<https://ubc-mds-2026-27.github.io/DSCI-522-group-01-diabetes-indicators-prediction/docs/diabetes-indicators-prediction.html>
 
 ## Usage 
 
@@ -63,7 +62,7 @@ it downloads the data again from the UCI Machine Learning Repository
 (so you need an internet connection),
 and overwrites the files in `data/raw/` and `data/processed/`.
 The rendered report is written to
-`analysis/diabetes-indicators-prediction.html`,
+`docs/diabetes-indicators-prediction.html`,
 replacing the versions in this repository.
 
 This command will run the whole analysis inside a Docker container, once the Quarto render finishes the `--rm` Docker will automically remove the container.

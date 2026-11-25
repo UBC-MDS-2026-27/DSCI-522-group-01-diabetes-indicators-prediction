@@ -153,6 +153,12 @@ Each time you re-render the report, copy it there again, commit and push:
 cp reports/breast_cancer_predictor_report.html docs/index.html
 ```
 
+Then merge the branch into `main` in a pull request.
+
+### Publishing the report
+
+The analysis is rendered directly into the docs folder.
+
 ### Creating a branch
 
 Create a new branch to contain a new contribution, contributions should be pushed to the new branch. It is important to always create a new branch instead of directly making changes to the main branch. 

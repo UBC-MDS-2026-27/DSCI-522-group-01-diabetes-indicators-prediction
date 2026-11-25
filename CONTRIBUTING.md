@@ -93,7 +93,7 @@ so a file you change there changes on your computer too.
    docker compose down
    ```
  
-<details>
+</details>
 
 <details>
 <summary><strong>If it doesn't connect</strong></summary>

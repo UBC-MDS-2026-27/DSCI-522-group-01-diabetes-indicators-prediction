@@ -18,33 +18,43 @@ Each row in the data set represents one survey respondent, giving 253,680 rows a
 ## Report
 
 The final report can be found:
-<https://ubc-mds-2026-27.github.io/DSCI-522-diabetes-indicators-prediction/>
-(HTML)
+<https://ubc-mds-2026-27.github.io/DSCI-522-group-01-diabetes-indicators-prediction/docs/diabetes-indicators-prediction.html>
 
-## Usage
+## Usage 
 
-First time running the project,
-install [uv](https://docs.astral.sh/uv/getting-started/installation/)
-and [Quarto](https://quarto.org/docs/get-started/),
-then clone this repository and move into it:
+Our analysis should be ran inside a Docker container, ensuring everyone uses the same software and package versions. The image is published on Docker Hub at [Docker dsci-522-group-01-diabetes-indicators-prediction](https://hub.docker.com/r/agutzz/dsci-522-group-01-diabetes-indicators-prediction/)
 
-``` bash
+### Setup
+
+Prior to running this project install [Docker](https://www.docker.com/get-started/), then clone this repository and move into it:
+
+```bash
 git clone https://github.com/UBC-MDS-2026-27/DSCI-522-group-01-diabetes-indicators-prediction
 cd DSCI-522-group-01-diabetes-indicators-prediction
 ```
 
-Then run the following from the root of this repository
-to create the virtual environment:
+Make sure you run the following commands in the root of this repository
 
-``` bash
-uv sync
+### 1. Make an ssh key
+
+You will need to make an ssh key if you do not have one yet, run the command below and press enter at each question:
+
+```bash
+ssh-keygen -t ed25519
 ```
 
-To run the analysis and render the report,
-run the following from the root of this repository:
+Without this ssh key, Docker will automatically make a folder named `~/.ssh/id_ed25519.pub` instead, and connecting to the container over ssh will continually fail until you delete that folder and make an ssh key.
 
-``` bash
-uv run quarto render
+### 2. Download the image:
+
+```bash
+docker compose pull
+```
+
+### 3. Render the report in the container
+
+```bash
+docker compose run --rm analysis-env uv run quarto render
 ```
 
 Rendering runs the whole analysis from scratch:
@@ -52,15 +62,23 @@ it downloads the data again from the UCI Machine Learning Repository
 (so you need an internet connection),
 and overwrites the files in `data/raw/` and `data/processed/`.
 The rendered report is written to
-`analysis/diabetes-indicators-prediction.html`,
+`docs/diabetes-indicators-prediction.html`,
 replacing the versions in this repository.
+
+This command will run the whole analysis inside a Docker container, once the Quarto render finishes the `--rm` Docker will automically remove the container.
+
+## Contributing
+
+See [`CONTRIBUTING.md`](CONTRIBUTING.md) if you would like to change the analysis, add a package, or update our published report.
 
 ## Dependencies
 
-- [uv](https://docs.astral.sh/uv/) (version 0.12.7 or higher)
-- [Quarto](https://quarto.org/) (version 1.10.18 or higher)
-- Python and packages listed in [`pyproject.toml`](pyproject.toml)
-  (exact versions are locked in [`uv.lock`](uv.lock))
+-[Docker](https://www.docker.com/)
+- The image is built from the [`Dockerfile`](Dockerfile) within this repository. 
+  It will install Quarto, uv, 
+  and Python with packages listed in [`pyproject.toml`](pyproject.toml)
+  (exact versions are locked in [`uv.lock`](uv.lock)).
+
 
 ## AI use statement
 

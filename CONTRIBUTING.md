@@ -146,6 +146,17 @@ Then merge the branch into `main` in a pull request.
 
 ### Publishing the report
 
+The report on GitHub Pages is a copy of the rendered report in `docs/index.html`.
+Each time you re-render the report, copy it there again, commit and push:
+
+``` bash
+cp reports/breast_cancer_predictor_report.html docs/index.html
+```
+
+Then merge the branch into `main` in a pull request.
+
+### Publishing the report
+
 The analysis is rendered directly into the docs folder.
 
 ### Creating a branch

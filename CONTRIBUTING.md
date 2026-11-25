@@ -202,4 +202,4 @@ It is also your responsibility to maintain transparency and disclose AI usage. A
 
 ## Attributions
 
-The above contribution guidelines were adapted from [Altair CONTRIBUTING.md](https://github.com/vega/altair/blob/master/CONTRIBUTING.md?plain=1) and [DSCI 522 Project Template CONTRIBUTING.md](https://github.com/UBC-MDS/DSCI_522_project-template-breast-cancer-predictor/blob/main/CONTRIBUTING.md). Our AI use policy guidelines were adapted from [SciPy](https://scipy.github.io/devdocs/dev/conduct/ai_policy.html).
+The above contribution guidelines were adapted from [Altair CONTRIBUTING.md](https://github.com/vega/altair/blob/master/CONTRIBUTING.md?plain=1) and [DSCI 522 Project Template CONTRIBUTING.md](https://github.com/UBC-MDS/DSCI_522_project-template-breast-cancer-predictor/blob/1.0.0/CONTRIBUTING.md). Our AI use policy guidelines were adapted from [SciPy](https://scipy.github.io/devdocs/dev/conduct/ai_policy.html).

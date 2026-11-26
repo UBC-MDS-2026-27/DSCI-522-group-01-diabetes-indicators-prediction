@@ -18,7 +18,7 @@ Each row in the data set represents one survey respondent, giving 253,680 rows a
 ## Report
 
 The final report can be found:
-<https://ubc-mds-2026-27.github.io/DSCI-522-group-01-diabetes-indicators-prediction/docs/diabetes-indicators-prediction.html>
+<https://ubc-mds-2026-27.github.io/DSCI-522-group-01-diabetes-indicators-prediction/>
 
 ## Usage 
 
@@ -26,7 +26,7 @@ Our analysis should be ran inside a Docker container, ensuring everyone uses the
 
 ### Setup
 
-Prior to running this project install [Docker](https://www.docker.com/get-started/), then clone this repository and move into it:
+Prior to running this project, install [Docker](https://www.docker.com/get-started/), then clone this repository and move into it:
 
 ```bash
 git clone https://github.com/UBC-MDS-2026-27/DSCI-522-group-01-diabetes-indicators-prediction
@@ -73,7 +73,7 @@ See [`CONTRIBUTING.md`](CONTRIBUTING.md) if you would like to change the analysi
 
 ## Dependencies
 
--[Docker](https://www.docker.com/)
+- [Docker](https://www.docker.com/)
 - The image is built from the [`Dockerfile`](Dockerfile) within this repository. 
   It will install Quarto, uv, 
   and Python with packages listed in [`pyproject.toml`](pyproject.toml)

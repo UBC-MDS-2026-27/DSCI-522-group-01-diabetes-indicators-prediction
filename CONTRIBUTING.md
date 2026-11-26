@@ -6,7 +6,7 @@ Input, feedback, bug reports, and contributions to our analysis can be made via 
 
 ### Setting up your environment
 
-Development and running of the analysis is all done in the same Docker container, this ensures everyone uses the same software and package versions. Follow the [Usage section of the README](README.md#usager)(install Docker, clone the repository, make an ssh key, and download the image). Run all commands below from the root of this repository.
+Development and running of the analysis is all done in the same Docker container, this ensures everyone uses the same software and package versions. Follow the [Usage section of the README](README.md#usage)(install Docker, clone the repository, make an ssh key, and download the image). Run all commands below from the root of this repository.
 
 ### Working in the container
 
@@ -146,17 +146,6 @@ Then merge the branch into `main` in a pull request.
 
 ### Publishing the report
 
-The report on GitHub Pages is a copy of the rendered report in `docs/index.html`.
-Each time you re-render the report, copy it there again, commit and push:
-
-``` bash
-cp reports/breast_cancer_predictor_report.html docs/index.html
-```
-
-Then merge the branch into `main` in a pull request.
-
-### Publishing the report
-
 The analysis is rendered directly into the docs folder.
 
 ### Creating a branch
@@ -188,7 +177,7 @@ git commit -m "descriptive message about the contribution made"
 git push origin <your-branch-name>
 ```
 
-After pushing you will need to submit a pull request on GitHub asking to merge the new contributing branch to the main branch. Please include details/explaination of the contribution within the pull request and assign all current team members as reviewers of the request. Feedback to the pull request will be given in the pull request discussion. 
+After pushing you will need to submit a pull request on GitHub asking to merge the new contribution branch to the main branch. Please include details/explanation of the contribution within the pull request and assign all current team members as reviewers of the request. Feedback to the pull request will be given in the pull request discussion. 
 
 ## Code of conduct
 

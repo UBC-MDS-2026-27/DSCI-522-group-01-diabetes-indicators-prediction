@@ -62,7 +62,7 @@ it downloads the data again from the UCI Machine Learning Repository
 (so you need an internet connection),
 and overwrites the files in `data/raw/` and `data/processed/`.
 The rendered report is written to
-`docs/diabetes-indicators-prediction.html`,
+`docs/index.html`,
 replacing the versions in this repository.
 
 This command will run the whole analysis inside a Docker container, once the Quarto render finishes the `--rm` Docker will automically remove the container.

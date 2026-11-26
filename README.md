@@ -26,14 +26,14 @@ Our analysis should run inside a Docker container, ensuring everyone uses the sa
 
 ### Setup
 
-Prior to running this project, install and launch [Docker](https://www.docker.com/get-started/), then clone this repository and move into it:
+Prior to running this project, install [Docker](https://www.docker.com/get-started/). Every step below uses Docker, so before you run any of the commands, open Docker Desktop and wait until it shows that the Docker engine is running. Docker Desktop needs to stay open the whole time you are running the analysis. Then clone this repository and move into it:
 
 ```bash
 git clone https://github.com/UBC-MDS-2026-27/DSCI-522-group-01-diabetes-indicators-prediction
 cd DSCI-522-group-01-diabetes-indicators-prediction
 ```
 
-Make sure you run the following commands in the root of this repository
+Make sure you run the following commands in the root of this repository.
 
 ### 1. Make an ssh key
 
@@ -58,14 +58,11 @@ docker compose run --rm analysis-env uv run quarto render
 ```
 
 Rendering runs the whole analysis from scratch:
-it downloads the data again from the UCI Machine Learning Repository
-(so you need an internet connection),
-and overwrites the files in `data/raw/` and `data/processed/`.
-The rendered report is written to
-`docs/index.html`,
-replacing the versions in this repository.
+it downloads the data again from the UCI Machine Learning Repository (so you need an internet connection), and overwrites the files in `data/raw/` and `data/processed/`. The rendered report is written to `docs/index.html`, replacing the versions in this repository.
 
-This command will run the whole analysis inside a Docker container, once the Quarto render finishes the `--rm` Docker will automatically remove the container.
+This command runs the whole analysis inside a Docker container. Once the Quarto render finishes, the `--rm` flag makes Docker remove the container automatically.
+
+If you see an error such as "Cannot connect to the Docker daemon", Docker Desktop is not running. Open it, wait until the Docker engine is running, and run the command again.
 
 ## Contributing
 
@@ -74,10 +71,7 @@ See [`CONTRIBUTING.md`](CONTRIBUTING.md) if you would like to change the analysi
 ## Dependencies
 
 - [Docker](https://www.docker.com/)
-- The image is built from the [`Dockerfile`](Dockerfile) within this repository. 
-  It will install Quarto, uv, 
-  and Python with packages listed in [`pyproject.toml`](pyproject.toml)
-  (exact versions are locked in [`uv.lock`](uv.lock)).
+- The image is built from the [`Dockerfile`](Dockerfile) within this repository. It will install Quarto, uv, and Python with packages listed in [`pyproject.toml`](pyproject.toml)(exact versions are locked in [`uv.lock`](uv.lock)).
 
 
 ## AI use statement

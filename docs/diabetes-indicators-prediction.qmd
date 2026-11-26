@@ -53,29 +53,25 @@ Each row in the data set represents one survey respondent, giving 253,680 rows a
 
 (Note: Claude AI helped generate this description of how the data were curated and made publicly available)
 
-We download the data with the code below. The data are retrieved from the "CDC Diabetes Health Indicators" entry in the UCI Machine Learning Repository (ID 891) using the ucimlrepo Python package, which returns the features and the target variable as separate data frames. We combine them into a single data set and save it as `cdc_diabetes_health_indicators.csv` in `data/raw/`, so the analysis can be re-run from the saved file without downloading the data again.
+We download the data with the code below. The data are retrieved from the "CDC Diabetes Health Indicators" entry in the UCI Machine Learning Repository (ID 891) using the ucimlrepo Python package, which returns the features and the target variable as separate data frames. We combine them into a single data set and save a copy as `cdc_diabetes_health_indicators.csv` in `data/raw/`, so the raw data used in the analysis are kept in the repository. The data are downloaded again each time the report is rendered, so the analysis always runs from the original source.
 
 ```{python}
-# path to the saved raw data
+# path to save the raw data
 raw_path = Path("../data/raw/cdc_diabetes_health_indicators.csv")
 
-# only download the data if it has not been saved yet
-if not raw_path.exists():
-    cdc_diabetes_health_indicators = fetch_ucirepo(id=891)
+# download the data from the UCI Machine Learning Repository
+cdc_diabetes_health_indicators = fetch_ucirepo(id=891)
 
-    # combine the features and target into one data frame
-    df = pd.concat(
-        [cdc_diabetes_health_indicators.data.features,
-         cdc_diabetes_health_indicators.data.targets],
-        axis=1
-    )
+# combine the features and target into one data frame
+df = pd.concat(
+    [cdc_diabetes_health_indicators.data.features,
+     cdc_diabetes_health_indicators.data.targets],
+    axis=1
+)
 
-    # save raw dataset into data/raw
-    raw_path.parent.mkdir(parents=True, exist_ok=True)
-    df.to_csv(raw_path, index=False)
-
-# read the data from the saved file
-df = pd.read_csv(raw_path)
+# save raw dataset into data/raw (overwrites any earlier copy)
+raw_path.parent.mkdir(parents=True, exist_ok=True)
+df.to_csv(raw_path, index=False)
 ```
 
 ## Splitting our data into training and test sets

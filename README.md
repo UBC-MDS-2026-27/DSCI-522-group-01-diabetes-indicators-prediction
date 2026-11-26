@@ -22,7 +22,7 @@ The final report can be found:
 
 ## Usage 
 
-Our analysis should be ran inside a Docker container, ensuring everyone uses the same software and package versions. The image is published on Docker Hub at [Docker dsci-522-group-01-diabetes-indicators-prediction](https://hub.docker.com/r/agutzz/dsci-522-group-01-diabetes-indicators-prediction/)
+Our analysis should run inside a Docker container, ensuring everyone uses the same software and package versions. The image is published on Docker Hub at [Docker dsci-522-group-01-diabetes-indicators-prediction](https://hub.docker.com/r/agutzz/dsci-522-group-01-diabetes-indicators-prediction/)
 
 ### Setup
 
@@ -65,7 +65,7 @@ The rendered report is written to
 `docs/index.html`,
 replacing the versions in this repository.
 
-This command will run the whole analysis inside a Docker container, once the Quarto render finishes the `--rm` Docker will automically remove the container.
+This command will run the whole analysis inside a Docker container, once the Quarto render finishes the `--rm` Docker will automatically remove the container.
 
 ## Contributing
 

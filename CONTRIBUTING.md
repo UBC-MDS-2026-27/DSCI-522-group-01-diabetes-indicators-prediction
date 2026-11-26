@@ -44,7 +44,7 @@ so a file you change there changes on your computer too.
 <details>
 <summary><strong>Each time you work on the project</strong></summary>
 
-1. Within the terminal of your project folder, start the container in the background: 
+1. Open Docker Desktop and wait until it shows that the Docker engine is running. Then, in a terminal in your project folder, start the container in the background:
 
    ``` bash
    docker compose up -d
@@ -60,7 +60,7 @@ so a file you change there changes on your computer too.
 4. Type `root@localhost:2222` and press Enter. A new Positron window opens.
    * If it asks for the platform of the remote host, pick **Linux**.
    * If it asks whether you trust the host (a "fingerprint"), click **Continue**.
-   * The first time, Positron installs its server inside the container. This may take a few minutes 
+   * The first time, Positron installs its server inside the container. This may take a few minutes.
 
 5. **Open the project folder.**
    The bottom left corner now shows `SSH: localhost:2222`,
@@ -98,6 +98,8 @@ so a file you change there changes on your computer too.
 <details>
 <summary><strong>If it doesn't connect</strong></summary>
 
+* **"Cannot connect to the Docker daemon" or `docker compose` doesn't work:**
+  Docker Desktop isn't running. Open it, wait until the Docker engine is running, and try again.
 * **`~/.ssh/id_ed25519.pub` is a folder:** Docker made it because the key didn't exist yet.
   Run `docker compose down`, delete that folder, make the key
   (see the [README](README.md#usage)), and start again.

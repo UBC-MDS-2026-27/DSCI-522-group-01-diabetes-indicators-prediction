@@ -26,7 +26,7 @@ Our analysis should be ran inside a Docker container, ensuring everyone uses the
 
 ### Setup
 
-Prior to running this project, install [Docker](https://www.docker.com/get-started/), then clone this repository and move into it:
+Prior to running this project, install and launch [Docker](https://www.docker.com/get-started/), then clone this repository and move into it:
 
 ```bash
 git clone https://github.com/UBC-MDS-2026-27/DSCI-522-group-01-diabetes-indicators-prediction

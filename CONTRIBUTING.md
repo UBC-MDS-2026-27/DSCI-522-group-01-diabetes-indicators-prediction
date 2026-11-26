@@ -60,7 +60,7 @@ so a file you change there changes on your computer too.
 4. Type `root@localhost:2222` and press Enter. A new Positron window opens.
    * If it asks for the platform of the remote host, pick **Linux**.
    * If it asks whether you trust the host (a "fingerprint"), click **Continue**.
-   * The first time, Positron installs its server inside the container. This make take a few minutes 
+   * The first time, Positron installs its server inside the container. This may take a few minutes 
 
 5. **Open the project folder.**
    The bottom left corner now shows `SSH: localhost:2222`,
@@ -146,7 +146,7 @@ Then merge the branch into `main` in a pull request.
 
 ### Publishing the report
 
-The analysis is rendered directly into the docs folder.
+Rendering writes the report straight to docs/index.html, which is what GitHub Pages shows. After you re-render, commit docs/index.html with your changes so the published report stays up to date.
 
 ### Creating a branch
 
